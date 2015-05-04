@@ -1,0 +1,30 @@
+At the moment the platform mainly consists of a runtime allowing the Smart Society application to manage the submission of tasks by the user application. The platform provides also some library (against which the application is compiled) to operate with the current components (SmartCom, Orchestration Manager, Peer Manager). The code is in a private repository at \url{https://gitlab.com/smartsociety/appruntime}.%https://gitlab.com/Teudimundo/smartask}.
+
+A Smart Society Application has its own identifier, generated during the registration phase. At the moment the application code is written by a developer directly in Java, in the final version the code will be generated through the programming framework. Each time a task is submitted to the application a new application instance is created, each instance has it's own state.
+
+\subsection{Runtime}
+
+When the runtime is run three endpoints are provided: 
+
+\begin{itemize}
+\item {\bf POST:/task/:applicationId/} To submit tasks, the runtime will ask the application to create a \textit{instance initializer} that will take care of the setup phase of the task. The application is expected to carry out all the operation that can be performed before interacting with the peers. The posted data is domain--dependent, and it will be serialized and managed by the application at the moment of instance creation. The runtime associated to the instance (hence the task) creates an identifier that is returned as response.
+
+\item {\bf GET:/task/:applicationId/} To retrieve the status of all or part of the tasks of the application, query parameters can be used in the query and they will be managed by the application that might filter which tasks to show based non them. Note that the status format for each task is just required to be a valid json node (either a text or more complex structures), but it will be completely domain--dependent, in fact the SmartSociety application can send whatever information the user application requires.
+
+\item {\bf GET:/task/:applicationId/:taskId} To retrieve the status of a specific task. As for the previous point both query parameters and the response are domain--dependent. 
+
+\item {\bf POST:/message/:applicationId/} Used by the peer applications to communicate back with the application. To use this endpoint the application must have previously contacted the peer with a message containing a given conversation identifier. Such identifier is used then by the runtime to dispatch the message to the correct application instance, the content of the message is then handled by the application instance that  changes its state according to the information received.
+
+\end{itemize}
+
+\subsection{Component Library}
+
+The component library allows the application development to be abstracted from the real components, allowing easier testing. 
+Furthermore the component wrappers will give a simple interface to the component that is integrated with the runtime.
+
+
+\subsection{Expected evolution}
+
+In the future version of the platform each application and its runtime will be containerized. A service for routing the requests from general endpoints to the right application runtime will be provided.
+
+The way the runtime will evolve, and its interaction with applications, is highly dependent on the outcome of the programming model and programming framework definition efforts currently ongoing within WP7.

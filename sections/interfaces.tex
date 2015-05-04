@@ -1,0 +1,66 @@
+In this section we will list the components integrated in the current
+version of the SmartSociety platform and the key APIs thereof
+used for supporting the two scenarios described in the previous
+section.
+
+\subsection{Peer Manager}
+%The Peer Manager (PM) is developed within WP4 and its description can
+%be found in Deliverable D4.2~\cite{D4.2} . 
+The Peer Manager APIs specifications can be found at
+\url{http://demos.disi.unitn.it:8080/smartsociety-score-api/} and are further
+described in Deliverable D4.2~\cite{D4.2}. The PM is used for:
+\begin{itemize}
+\item {\bf Retrieving peers satisfying some requirements}: This
+  request is made by the Orchestration Manager in order to identify
+  potential peers composing a suitable collective for carrying out a
+  given task. Endpoint used:\\
+	\url{/instances/search/} (\textsc{GET})
+\item {\bf Creating collective}: This request is made by the Application/Application Runtime at the end of the negotiation. Endpoint used:\\
+	\url{/instances/} (\textsc{POST})
+\item {\bf Retrieving peers in a collective}: This request is made by
+  the Smartcom CM, so that it will be able to retrieve peer information later. Endpoint used:\\
+	\url{/instances/search} (\textsc{GET})
+\item {\bf Retrieving peers info}: This request is made by Smartcom, that requires the information about the communication channel to be used. Endpoint used:\\
+	\url{/instances/search} (\textsc{GET})	
+\end{itemize}
+
+
+\subsection{Communication Middleware}
+%The SmartCom Communication Middleware is developed within WP7 and its
+%description can be found in Deliverable D7.1~\cite{D7.1}. 
+The SmartCom Communication Middleware APIs specifications can be found at 
+\url{https://github.com/tuwiendsg/SmartCom} and are further described in Deliverable D7.1~\cite{D7.1}. The Communication Middleware is mainly used for:
+\begin{itemize}
+\item {\bf Application to peer communication}: The Smart Society application sends messages to the peers belonging to a collective through Smartcom, that will deliver it using the preferred communication channel declared in the peer profile.
+\item {\bf Peer to application reply communication}: Peers can reply to messages from the application. The platform provides an endpoint to which the peers can send a reply to a given message. The message is identified by the conversation id, this attribute is also used to know which application.
+originally created the message, so that the platform can correctly dispatch it. 
+\end{itemize}
+
+\subsection{Orchestration Manager}
+%The Orchestration Manager (OM) is developed within WP6 and its
+%description can be found in  Deliverable D6.2~\cite{D6.2}. 
+The Orchestration Manager APIs specifications can be found at
+\url{https://bitbucket.org/rovatsos/smartsociety-internal/wiki/PeerManager/APIBGU}
+and are further described in Deliverable D6.2~\cite{D6.2}. \\
+In general, the various operations that the OM supports can be divided
+into two big groups, depending on whether they require synchronisation
+on the back-end or not:
+\begin{itemize}
+\item Operations that are read-only, and thus no synchronisation is
+  needed on the documents on the backend;\
+\item Operations that require write-operations, and thus
+  synchronisation is critical and should happen on the backend
+  (potentially by using semaphores and other approaches developed
+  within WP6).
+\end{itemize}
+The key OM operations are:
+\begin{itemize}
+\item {\bf Posting a new task request}: In order to post a task request the following endpoint is used:\\
+	\url{/applications/:app/taskRequests} (\textsc{POST})
+\item {\bf Querying task requests:} The Smart Society application polls the orchestration manager to know the composition/negotiation state of the request. Endpoint used:\\
+  \url{/applications/:app/taskRequests/:request_id} (\textsc{GET})
+\item {\bf Querying tasks:} The Smart Society application retrieve the negotiable tasks to know which peer to contact for the negotiation. Endpoint used:\\
+  \url{/applications/:app/tasks/:task_id} (\textsc{GET})
+\item {\bf Updating tasks:} The Smart Society application updates the task according to whether the peer accepted or rejected it. Endpoint used:\\
+  \url{/applications/:app/negotiations} (\textsc{PUT})
+\end{itemize}

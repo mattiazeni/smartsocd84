@@ -1,0 +1,162 @@
+During the second year of project activities integration activities
+started. In the integration process, the architecture initially
+presented in Deliverable D8.1 was deeply revised. This process was
+required in order to align the activities carried out within the
+project's technical work packages (WP2-WP7) and to ensure
+interoperability among the components developed by the various
+partners. In this section we briefly present the architecture as it
+currently stands (at M24). No major changes are currently foreseen,
+even if ---given the research-oriented nature of the SmartSociety
+project--- this cannot be guaranteed. In this sense, the architectural
+specifications of the SmartSociety platform have to be seen as a live document, which reflects the
+actual progress of the research activities carried out by Consortium
+partners. 
+
+\subsection{Logical View}
+The logical view of the SmartSociety platform is presented in Fig.~\ref{fig:logical_view}. %The Consortium has identified 9 key
+%components which jointly provide the required system-level functionality.
+
+\begin{sidewaysfigure}
+%\begin{figure}[!hbt]
+ \centering
+ \includegraphics[width=1\textwidth]{figs/functional_diagram}%logical_view.pdf}
+ \caption{SmartSociety logical view.}
+ \label{fig:logical_view}
+%\end{figure}
+\end{sidewaysfigure}
+
+The core components which are part of the revised version of the SmartSociety are the following:
+\begin{itemize}
+\item \textbf{Application Runtime}: this is the component providing the support logic enabling peers to execute tasks. The runtime provides handlers for interacting with the various internal components provided by the SmartSociety platform. Furthermore, the Application Runtime provides the main endpoint for external applications to interact with the SmartSociety platform: through the APIs exposed by the applications running in the runtime, external applications can deliver computation tasks to the platform, and receive the  outcomes of their execution. The Application Runtime is developed within WP8. 
+
+\item \textbf{Orchestration Manager}: it provides two key functionalities: composition and negotiation. Composition takes task requests as inputs and generates tasks by solving constraint satisfaction problems specific to each application, potentially interacting with the peer manager (so that peer with certain capabilities can be identified) and the reputation service (so that the reputation of the capable peers can be obtained). The composition determines (i) the peers which can potentially execute such task, and (ii) the necessary interactions and/or external services which are needed to execute such task.  The negotiation manager is in charge of handling the negotiation process with peers in order to ensure that the services and resources required to carry out the task are actually present. The Orchestration Manager (OM) is developed within WP6 and its description can be found in  Deliverable D6.2~\cite{D6.2}.
+
+\item \textbf{Peer Manager}: it is responsible for managing all peer-related information. This includes their profile, as well as any other information which will be used by the Orchestration Manager for identifying possible peers that can execute a given task.  It maintains a profile of each peer, which
+represents a model thereof in terms of knowledge, resources and
+capacity. It provides a peer search functionality that is used by the Orchestration Manager to create compositions. Besides individual peers, the Peer Manager also manages collectives, which are groups of peers characterized by specific properties. Besides managing peer-related information, the Peer Manager is also in charge of protecting the user's privacy. The Peer Manager embeds a Knowledge Base (KB), which contains an agreed ontology about peers, task, workflows, incentives, etc. The KB provides the domain terminology, as well as all the semantic relations between terms. The KB is responsible for ensuring that all component share a common understanding of the inputs/outputs between any two parties of the platform. The overall KM is divided into domains, which allow to capture the diversity of the entities being part of SmartSociety. A semantic reasoner will allow to perform semantic queries over the KB. The Peer Manager (PM) is developed within WP4 and its description can be found in Deliverable D4.2~\cite{D4.2} .
+
+\item \textbf{Context Manager}: it is responsible for monitoring the context the agent represented on the platform by a peer is in\footnote{For a detailed description of the relationship linking an agent with a peer see~\cite{D2.2}}. For an individual human agent, this includes, e.g., tracking the location and recognizing the activity the agent is currently involved in. This can be further used to trigger context adaptation in applications. The Context Manager (CM) is developed within WP3 and a high-level description can be found in Deliverable D3.2~
+\cite{D3.2}.
+
+\item \textbf{Reputation Manager}: it handles the reputation of any system resource, including peers. It computes the reputation of a given peer based on feedback from other peers and users. It uses data from the provenance store in order to carry out the computation. Reputation is based on various metrics that the system will be able to compute, starting from peers' execution of tasks. Reputation information can be exposed directly to application users or used by the PM in the selection of suitable peers for a given task. The Reputation Manager (RM) is developed within WP2. A description of the RM can be found in Deliverable D2.1~\cite{d2.1} and Deliverable D2.2~\cite{D2.2}.
+
+%\item \textbf{Knowledge Base}: it is shared among the various components of the platform, and contains an agreed ontology about peers, task, workflows, incentives, etc. It provides the domain terminology, as well as all the semantic relations between terms. In particular, the knowledge base is responsible for ensuring that all component share a common understanding of the inputs/outputs between any two parties of the platform. The overall knowledge base will be divided into domains, which allow to capture the diversity of the entities being part of SmartSociety. A semantic reasoner will allow to perform semantic queries over the knowledge base.
+
+\item \textbf{Provenance Store}: it logs actions performed by platform
+components and peers according to the W3C PROV recommendation. In particular, the provenance store is the component responsible for keeping a record of how the overall compositions are being created, executed and how the data managed by the platform is being transformed. It will play a fundamental role in the evaluation of peers reputation. %, as well as in ensuring that the system as a whole enforces the proper privacy constraints imposed by the peers.
+It further supports an explanation service, which is able to visualize provenance trails and convert them in natural language. The Provenance Store (PS) is developed within WP2. A description of the PS can be found in Deliverable D2.1~\cite{d2.1} and Deliverable D2.2~\cite{D2.2}.
+
+\item {\bf Monitoring and analysis service}: it logs and monitors the platform jobs and can be used by platform administrators to perform root-cause analysis and to extract analytics on the performance of the system. The Monitoring and analysis service is developed within WP8.
+
+\item {\bf Incentives manager}: it manages incentives and
+interventions that can be used to achieve higher quality results. Incentives can play a twofold role in SmartSociety. First, they can be used to stimulate the participation of a peer (or a collective) in the execution of a given task. Second, they can be used to define specific strategies for community engagement. This will play a fundamental role in maintaining the peers community active over time. The Incentives Manager (IM) is developed within WP5.
+\end{itemize} 	
+
+
+\subsection{Deployment View and Network Diagrams}
+The SmartSociety platform has been designed according to REST architectural principles, with the aim of supporting flexibility in the deployment model. This
+means that the platform shall seamlessly support both single-tenant as
+well as multi-tenant deployment models. Also, the platform components
+can be centralised on a single infrastructure or can be distributed
+across different servers. The choice of the specific deployment model
+to be used depends on technical as well as business considerations. In
+the remainder of this section we present, as a use case, the current
+deployment utilised for integration, testing, validation and
+experimentation purposes. This is by no means to be considered the
+only model supported, but it provides an illustrative example of a
+supported configuration. 
+
+\begin{figure}[!hbt]
+ \centering
+ \includegraphics[width=1\textwidth]{figs/netDiagram}
+ \caption{SmartSociety platform: network diagram}
+ \label{fig:netDiagram}
+\end{figure}
+
+A network diagram is reported in Fig.~\ref{fig:netDiagram}. The end user in this case interacts with a User Application running on her smartphone. The mobile app interacts with the Application residing in the SmartSociety Platform Core Deployment. Some of the components reside on different servers; in this case the PM is hosted by partner DISI and the PS and RM are hosted by partner SOTON. The Core Deployment further manages interactions with peers (through the CM). In this case we have a human agent which interacts through a Peer Mobile Application, a machine peer (Google) and a machine peer (Twitter) which then reaches out to human agents interacting with it through any Twitter client.
+
+
+
+The corresponding deployment diagram is reported in Fig.~\ref{fig:deployDiagram}. Here it can be seen that the core deployment server hosts four key components, i.e., the incentives manager, the communication middleware, the orchestration manager and the application container (where the application is executed). On the end user smartphone, besides the user application (client), the client of the context manager is also  deployed. The CM client interacts with the corresponding server-side component deployed on the DISI server, where the PM is also hosted. The PS and RM are on the SOTON server. A third-party server is used to host both Google and Twitter peer, which then connect to the corresponding web service.
+\begin{sidewaysfigure}
+%\begin{figure}[!hbt]
+ \centering
+ \includegraphics[width=1\textwidth]{figs/deploymentView}
+ \caption{SmartSociety platform: deployment diagram}
+ \label{fig:deployDiagram}
+%\end{figure}
+\end{sidewaysfigure}
+
+\subsection{Dynamic View}
+Fig.~\ref{fig:dynamic_view} provides a sample dynamic view of how the various components of the SmartSociety platform interact with each other, when running an application based on SmartSociety.\footnote{For the sake of clarity, and as these were developed while integrating the first version of the platform, only interactions among the user application, application, orchestration manager, peer manager, communication middleware and human agents are reported.} 
+\begin{sidewaysfigure}
+%\begin{figure}[!hbt]
+ \centering
+ \includegraphics[width=1\textwidth]{figs/dynamic_view}
+ \caption{SmartSociety dynamic view .}
+ \label{fig:dynamic_view}
+%\end{figure}
+\end{sidewaysfigure}
+
+The sequence diagram can be summarized by the following steps:
+\begin{itemize}
+\item Platform invocation (step 1): the starting point is a user application (e.g., a mobile application) which is exploiting the SmartSociety platform for running a human computation task (refer to Sec.~\ref{sec:asksmartsoc} for a more concrete example). The request is directed towards an application deployed in the SmartSociety application container and providing the necessary support for executing the requested task. The invocation will contain all the necessary metadata, including a complete description of the task, according to the APIs offered by the application running in the platform.
+
+\item Composition request (steps 2-6): the application, after receiving the request from the user application, converts it into a \textit{composition job request}. A composition is the request to create a composition of peers/collectives capable of executing the task. The composition job request happens through %the programming abstractions provided by 
+the runtime, which allows to fully characterize the task that needs to be executed. Creating a composition involves querying the Peer Manager for identifying peers capable (individually or all together) to perform the given task\footnote{Note that also the Reputation Manager can be queried during this process. This is not reported in the diagram for the sake of simplicity, and as it reflects the current integrated components.}. Once the composition is identified, it is returned to the application, together with a pointer to the peers involved in it.
+
+\item  Negotiation (steps 7-14): the application then negotiates with peers the participation of the agents they represent in a given task. This is mediated/facilitated by the Orchestration Manager. Such negotiation occurs for every single peer involved in the identified composition. The negotiation with peers also involves the identification of the channel preferred by the peer to receive a given task (e.g., email, social, mobile app in the case of human agent). In this phase, the SmartCom communication middleware is exploited to facilitate the interaction with peers. At the completion of this phase, the Orchestration Manager is notified about the successful completion of the negotiation.
+
+\item Execution (steps 15-20): once the composition has been successfully identified and agreed with peers, the execution of the task can starts. This can be based over multiple steps and is managed by the Application, exploiting the programming framework provided be the application runtime. This phase concludes with the complete execution of the submitted task. Results are then returned to the User application that has initiated the request.
+
+\end{itemize}
+
+
+% The SmartSociety platform is meant to support a rather wide range of
+% social computation patterns (or templates). In order to provide
+% insight into the flexibility of the platform and the actual
+% interworking of components, we have developed sequence diagrams for two
+% 'extreme' applications:
+% \begin{itemize}
+% \item SmartShare is a ridesharing system able to account for user's
+% preferences and to compute recommendations based on the feedback
+% provided by other service users. It is what we call a 'full
+% negotiation' scenario, in which the computational task of finding an
+% agreement on the rides is left to individuals and collectives. The
+% platform in this case is used to carry out administration tasks, in
+% particular keeping track of the rides and ride requests, their status
+% and to maintain reputation of drivers and passengers.
+% \item AskSmartSociety! is a Q\&A service supporting hybridity. The
+% computational pattern here is that typical of micro-tasking
+% applications (\'a la Mechanical Turk, roughly speaking), where the
+% task in this corresponds to a question to be answered. The service
+% supports hybrid computation in that questions can be transparently
+% provided by machine peers or human peers. Quality criteria can be
+% specified in order to define when a chosen answer has to be presented
+% to the user. 
+% \end{itemize}
+% In the following we present details about the two aforementioned
+% applications. 
+% \subsubsection{Example: SmartShare}
+% \begin{figure}
+% \centering
+% \includegraphics[width=0.9\textwidth]{./figs/sequenceRide}
+% \caption{Sequence diagram of the SmartShare application.}
+% \label{fig:dynamic_share}
+% \end{figure}
+
+% \subsection{Example: Ask SmartSociety}\label{sec:asksmartsoc}
+% \textit{Ask SmartSociety} is a simple Questions and Answer service enabled by the SmartSociety platform which has been used as the benchamark for implementing the initial version of the SmartSociety platform. It focus on tourism, which is the reference domain to be used for validating the SmartSociety vision.\\
+% Ask SmartSociety! will be a service where users can post questions in natural languages and peers can provide answers. Peers providing answers can be humans (individuals or collectives) as well as machines (intelligent software agents). Peers can compose (forming collectives, hybrid or not) to provide answers. Answers can be ranked based on the reputation of the peers or on community ranking (similarly to stackoverflow). In some instances the user issuing the question can select an answer and provide feedback on the peer providing it.
+% Two examples (grounded in the tourism application scenarios) can help in understanding the features of the Ask SmartSociety! service:
+
+% \textit{Next week Peter will fly to Venice. He will be busy in meetings during the day but wants to explore some ‘hidden’ places at night. He could well explore various online tourist sites but he prefers to ask experts and local people. He could also google for relevant content, but he does not actually need an answer right away, he just needs to get it in one week. And having one system which allows him to query local experts, web-based recommendation services and incoming tourism institutions looks definitely appealing to him!
+% Alice is visiting Milano during the next week. It is his first time in Milan, and she is looking for a restaurant in the city centre. Since it is spring time, she would love eat outside and therefore  find a restaurant with a garden. Alice is also celiac, and she needs to find restaurants, which do have gluten free menus. She relies on the Ask SmartSociety! application for retrieving some suggestions on where to have dinner during her stay in Milan. She is looking for unconventional recommendations.}
+
+
+% \begin{figure}
+% \centering
+% \includegraphics[width=0.9\textwidth]{./figs/sequenceAsk}
+% \caption{Sequence diagram for AskSmartSociety! applications.}
+% \label{fig:dynamic_ask}
+% \end{figure}

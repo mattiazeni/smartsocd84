@@ -1,0 +1,138 @@
+% WP X: "WP name"
+% Deliverable DX.Y: "Name of this deliverable"
+%
+% Editors: Name and Surname of the Editor
+% List of Authors:
+%
+
+\documentclass{SmartReport}
+\usepackage{url, rotating}
+
+\usepackage{subfig}
+
+\begin{document}
+\wpnumber{8} \wptitle{Architecture and Integration}
+\instshort{ShortNameInstitution} \delnumber{8.3} \versionnumber{0.1}
+\contribshort{UH}
+\deltitle{Second Platform Prototype and Validation}
+\delshorttitle{Platform Prototype} 
+\delavail{CO}
+\delstatus{F}	
+\duedate{30/06/2015}
+\deldate{\today}
+\delowner{Iacopo Carreras, Daniele Miorandi}
+\wpleader{Iacopo Carreras, UH}
+\qualityassessor{Luc Moreau, SOTON \& Ronald Chenu Abente, UNITN}
+\smartkeywords{Platform, Prototype, Integration, Validation}
+\maketitle
+
+\begin{smartcontributors}
+%%syntax: version number & date & author (institution) & reviewer (individual)\\
+%0.1 & 04/11/2014 & 
+UH & Daniele Miorandi, Iacopo Carreras, Tommaso Schiavinotto \\
+\end{smartcontributors}
+
+%define the abstract
+\begin{smartabstract}
+\input{sections/execsum.tex}
+\end{smartabstract}
+
+
+\section*{List of Acronyms}
+\begin{tabular}{|c|p{3cm}|p{10cm}|}
+\hline 
+\textbf{Acronym} & \textbf{Full Name} & \textbf{Description} \\
+\hline 
+\hline 
+%EC & Evaluator Component & System component in charge of evaluating the outcomes of each computation task (Sec.~\ref{sec:evaluator}).\\
+%\hline 
+CM & Context Manager & System componet in charge of monitoring the
+context the agent represented on the platform by a peer is in.\\
+\hline
+IM & Incentives Manager & System component in charge of managing the implementation of incentive schemes.\\  
+\hline 
+KB & Knowledge Base &  System component in charge of storing and managing the knowledge in the platform.\\
+\hline
+OM & Orchestration Manager &  System component in charge of
+orchestrating the lifecycle of tasks on the SmartSociety platform. \\
+\hline 
+PF & Programming Framework &  System component in charge of exposing
+appropriate primitives and interfaces to application developers.\\
+\hline 
+PM & Peer Manager &  System component in charge of managing peers.\\
+\hline \\
+PS & Provenance Store & System component in charge of logging actions performed by platform components and peers.\\
+\hline
+RM & Reputation Manager & System componet in charge of handling the reputation of any system resource, including peers. \\
+\hline
+SmartCom & Communication Middleware & System component in charge of managing
+communication channels between the platform and the peers. \\
+\hline
+\end{tabular}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+\label{sec:intro}
+\input{sections/intro.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Platform Architecture}
+\label{sec:arch}
+\input{sections/architecture.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \section{Mapping to the Application Scenarios}
+% \label{sec:mapping}
+% \input{sections/apps.tex}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \newpage
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \section{Interfaces Specifications}
+% \label{sec:apis}
+% \input{sections/interfaces.tex}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \newpage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Prototype Description}
+\label{sec:sw}
+\input{sections/sw.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\section{Prototype Validation and Testing}
+\label{sec:sw}
+\input{sections/validation.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Discussion and Further Integration Steps}
+\label{sec:concl}
+\input{sections/conclusions.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{./IEEEtran}
+\bibliography{BIB/biblio.bib}
+%\clearpage
+%\appendix
+%\section{Details on code}
+%\input{sections/annex1}
+\end{document}

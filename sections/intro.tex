@@ -1,0 +1,60 @@
+This report aims to describe the components developed and integrated by the Consortium members during the second reporting period. The prototype of the SmartSociety platform can be found at:
+\url{https://gitlab.com/smartsociety/appruntime}\footnote{A login/password has been created for reviewers: SmartSocietyReviewer/sm@rts0c13tyr3v13w3r}.%https://gitlab.com/Teudimundo/smartask}
+
+Starting from the analysis of requirements and initial platform architecture in D8.1~\cite{D8.1}, WP8 undertook an intense dialogue with technical workpackages (WP2-WP7) in order to ensure full alignment of the top-level platform architecture and of the scientific and technical outcomes of WP2-WP7. The main result of this first phase was a revised architecture of the SmartSociety platform, which is presented in Sec.~\ref{sec:arch}. During the second half of the year the actual integration of components started, resulted in a 'minified' version of the platform, which integrates the Peer Manager (PM), the Orchestration Manager (OM) and the Communication Middleware (CM), plus an application runtime. For such aforementioned components, the interfaces used are summarised in Sec.~\ref{sec:apis}. The platform-level APIs and functionality are described in Sec.~\ref{sec:sw}. The missing components will be integrated during the third year according to the roadmap outlined in Sec.~\ref{sec:concl}.
+
+% Within the SmartSociety project, Work-Package 8 (WP8) covers a twofold
+% role. First, it is in charge of defining the architecture of
+% the SmartSociety platform, ensuring a consistent view of the overall system, 
+% as well of the components being developed by the various technical
+% work-packages. Second, it aims at integrating the
+% software components developed in the technical work-packages (WP2-WP7)
+% into a coherent system prototype. Such prototype platform will be
+% used to develop and validate the proof-of-concept applications realized in WP9.
+
+% Within the first year of activities, only one task (T8.1, {\it Platform
+% requirements analysis and design}) was active. Activities started, in
+% line with the work plan, at M7. This deliverable
+% includes therefore the outcomes of the activities undertaken by Consortium
+% partners within the period M7-M12. 
+
+% Activities focused on (i) the analysis of requirements for the SmartSociety platform (ii) its preliminary design in terms of system-level architecture. 
+
+% High-level requirements were elicited by working in close cooperation with the
+% other WPs. They are organized around the many heterogeneous dimensions involved in the design of a complex socio-technical system such as SmartSociety, and cover the properties
+% that should be met by the final platform prototype. The analysis of the requirements represented the starting point for the design of the
+% system-level architecture. \\
+% The architectural design was inspired by four principles:
+% \begin{itemize}
+% \item {\bf Requirements:} the need to meet the requirements identified in the first part
+% of the deliverable for the SmartSociety platform. Such requirements will affect the design of both the overall system, as well as of single modules and components.
+% \item {\bf Integration:} the ability to provide a clear description of how the outcomes
+% of the technical WPs (WP2-WP7) will be aligned and coherently integrated in the platform
+% prototype.
+% \item {\bf Flexibility:} supporting flexibility in the usage of the platform in order to
+% enable the on-field experimental activities to be carried out for validation purposes in WP9. 
+% \item {\bf 3E}: To promote the re-use of existing infrastructures, components and modules in the development process in order to meet the criteria of economy, efficiency and effectiveness. 
+% \end{itemize}
+
+% Based on these considerations, a first design of the overall platform architecture was carried out. It encompasses:
+% \begin{itemize}
+% \item the definition of the logical and functional role of each platform component. This includes also the preliminary identification of modules within each component, in line with the progress of single technical WPs (Logical View);
+% \item the identification of how the various components interact with each other when running a computation (Dynamic View);
+% \item a preliminary identification of the deployment constraints (Deployment View).
+% \end{itemize}
+
+% Finally, a sample mapping to one of the scenarios used in the first year by the Project Consortium, namely the ride sharing one, is reported. Ride sharing has been used by the Consortium as an illustrative example of a hybrid computation. This mapping is provided in order to help other WPs to achieve a better understanding of the functionalities and features to be provided by each component and of the interactions with other WPs.
+
+% The architecture presented in this document will represent the starting point for the integration activities to be carried out in the second year of activities. The architecture will be iteratively revised, as the specifications of components by WP2-WP7 become available and scenarios and use cases get refined by WP9. The architecture of the SmartSociety platform should therefore be regarded as a reference living document, which will change and evolve over the life-time of the project. The adoption of an agile approach in the development and integration process will be adopted, with architectural design documentation getting updated at each release of the platform prototype. A first revised version of the architecture will be released together with the first prototype at M24 (D8.2). 
+
+% The remainder of this deliverable is organized as follows. In
+% Sec.~\ref{sec:requirements} we describe the requirements elicited for the
+% SmartSociety platform. In Sec.~\ref{sec:design} we map such
+% requirements to overall design patterns and principles, which
+% constitute the basis for the architecture definition. The architecture
+% is presented in terms of logical view in Sec.~\ref{sec:logical_view},
+% of dynamic view in Sec.~\ref{sec:data_view} and of deployment view in
+% Sec. \ref{sec:deployment_view}. A sample mapping to the ride-sharing scenario
+% is provided in Sec.~\ref{sec:mapping_scenarios}.
+% Sec.~\ref{sec:conclusions} concludes the deliverable defining a
+% roadmap for the activities of WP8 in the second year of the project. 
