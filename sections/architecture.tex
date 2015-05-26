@@ -1,16 +1,18 @@
-During the second year of project activities integration activities
-started. In the integration process, the architecture initially
-presented in Deliverable D8.1 was deeply revised. This process was
-required in order to align the activities carried out within the
-project's technical work packages (WP2-WP7) and to ensure
-interoperability among the components developed by the various
-partners. In this section we briefly present the architecture as it
-currently stands (at M24). No major changes are currently foreseen,
-even if ---given the research-oriented nature of the SmartSociety
-project--- this cannot be guaranteed. In this sense, the architectural
-specifications of the SmartSociety platform have to be seen as a live document, which reflects the
-actual progress of the research activities carried out by Consortium
-partners. 
+This section describes the SmartSociety platform architecture at M30. In line with the iterative approach pursued by the Consortium, the description is a snapshot of the current status of project activities in terms of integration of technology and software modules developed, and will evolve during the remainder of project lifetime according to the roadmap described in Sec.~\ref{sec:sw}.
+
+% During the second year of project activities integration activities
+% started. In the integration process, the architecture initially
+% presented in Deliverable D8.1 was deeply revised. This process was
+% required in order to align the activities carried out within the
+% project's technical work packages (WP2-WP7) and to ensure
+% interoperability among the components developed by the various
+% partners. In this section we briefly present the architecture as it
+% currently stands (at M24). No major changes are currently foreseen,
+% even if ---given the research-oriented nature of the SmartSociety
+% project--- this cannot be guaranteed. In this sense, the architectural
+% specifications of the SmartSociety platform have to be seen as a live document, which reflects the
+% actual progress of the research activities carried out by Consortium
+% partners. 
 
 \subsection{Logical View}
 The logical view of the SmartSociety platform is presented in Fig.~\ref{fig:logical_view}. %The Consortium has identified 9 key
@@ -25,6 +27,8 @@ The logical view of the SmartSociety platform is presented in Fig.~\ref{fig:logi
 %\end{figure}
 \end{sidewaysfigure}
 
+\todo{Understand whether to keep the description here}
+
 The core components which are part of the revised version of the SmartSociety are the following:
 \begin{itemize}
 \item \textbf{Application Runtime}: this is the component providing the support logic enabling peers to execute tasks. The runtime provides handlers for interacting with the various internal components provided by the SmartSociety platform. Furthermore, the Application Runtime provides the main endpoint for external applications to interact with the SmartSociety platform: through the APIs exposed by the applications running in the runtime, external applications can deliver computation tasks to the platform, and receive the  outcomes of their execution. The Application Runtime is developed within WP8. 
@@ -34,6 +38,8 @@ The core components which are part of the revised version of the SmartSociety ar
 \item \textbf{Peer Manager}: it is responsible for managing all peer-related information. This includes their profile, as well as any other information which will be used by the Orchestration Manager for identifying possible peers that can execute a given task.  It maintains a profile of each peer, which
 represents a model thereof in terms of knowledge, resources and
 capacity. It provides a peer search functionality that is used by the Orchestration Manager to create compositions. Besides individual peers, the Peer Manager also manages collectives, which are groups of peers characterized by specific properties. Besides managing peer-related information, the Peer Manager is also in charge of protecting the user's privacy. The Peer Manager embeds a Knowledge Base (KB), which contains an agreed ontology about peers, task, workflows, incentives, etc. The KB provides the domain terminology, as well as all the semantic relations between terms. The KB is responsible for ensuring that all component share a common understanding of the inputs/outputs between any two parties of the platform. The overall KM is divided into domains, which allow to capture the diversity of the entities being part of SmartSociety. A semantic reasoner will allow to perform semantic queries over the KB. The Peer Manager (PM) is developed within WP4 and its description can be found in Deliverable D4.2~\cite{D4.2} .
+
+\item \textbf{Task Execution Manager:} \todo{Add description, take from slides resulting from the Frankfurt meeting with WP3/WP6}
 
 \item \textbf{Context Manager}: it is responsible for monitoring the context the agent represented on the platform by a peer is in\footnote{For a detailed description of the relationship linking an agent with a peer see~\cite{D2.2}}. For an individual human agent, this includes, e.g., tracking the location and recognizing the activity the agent is currently involved in. This can be further used to trigger context adaptation in applications. The Context Manager (CM) is developed within WP3 and a high-level description can be found in Deliverable D3.2~
 \cite{D3.2}.
@@ -54,17 +60,19 @@ interventions that can be used to achieve higher quality results. Incentives can
 
 
 \subsection{Deployment View and Network Diagrams}
-The SmartSociety platform has been designed according to REST architectural principles, with the aim of supporting flexibility in the deployment model. This
-means that the platform shall seamlessly support both single-tenant as
-well as multi-tenant deployment models. Also, the platform components
+The SmartSociety platform has been designed according to REST architectural principles, with the aim of supporting flexibility in the deployment model. %This means that 
+The platform seamlessly supports both single-tenant as
+well as multi-tenant deployment models. %Also, 
+The platform components
 can be centralised on a single infrastructure or can be distributed
-across different servers. The choice of the specific deployment model
-to be used depends on technical as well as business considerations. In
-the remainder of this section we present, as a use case, the current
-deployment utilised for integration, testing, validation and
-experimentation purposes. This is by no means to be considered the
-only model supported, but it provides an illustrative example of a
-supported configuration. 
+across different servers. \todo{update diagram}
+%The choice of the specific deployment model
+%to be used depends on technical as well as business considerations. In
+%the remainder of this section we present, as a use case, the current
+%deployment utilised for integration, testing, validation and
+%experimentation purposes. This is by no means to be considered the
+%only model supported, but it provides an illustrative example of a
+%supported configuration. 
 
 \begin{figure}[!hbt]
  \centering
@@ -73,11 +81,12 @@ supported configuration.
  \label{fig:netDiagram}
 \end{figure}
 
-A network diagram is reported in Fig.~\ref{fig:netDiagram}. The end user in this case interacts with a User Application running on her smartphone. The mobile app interacts with the Application residing in the SmartSociety Platform Core Deployment. Some of the components reside on different servers; in this case the PM is hosted by partner DISI and the PS and RM are hosted by partner SOTON. The Core Deployment further manages interactions with peers (through the CM). In this case we have a human agent which interacts through a Peer Mobile Application, a machine peer (Google) and a machine peer (Twitter) which then reaches out to human agents interacting with it through any Twitter client.
+A sample network diagram is reported in Fig.~\ref{fig:netDiagram}. The end user in this case interacts with a User Application running on her smartphone. The mobile app interacts with the Application residing in the SmartSociety Platform Core Deployment. %Some of the components reside on different servers; 
+In this sample case the PM is hosted by partner DISI and the PS and RM are hosted by partner SOTON. The Core Deployment further manages interactions with peers (through the CM). In this case we have a human agent which interacts through a Peer Mobile Application, a machine peer (Google) and a machine peer (Twitter) which then reaches out to human agents interacting with it through any Twitter client.
 
 
 
-The corresponding deployment diagram is reported in Fig.~\ref{fig:deployDiagram}. Here it can be seen that the core deployment server hosts four key components, i.e., the incentives manager, the communication middleware, the orchestration manager and the application container (where the application is executed). On the end user smartphone, besides the user application (client), the client of the context manager is also  deployed. The CM client interacts with the corresponding server-side component deployed on the DISI server, where the PM is also hosted. The PS and RM are on the SOTON server. A third-party server is used to host both Google and Twitter peer, which then connect to the corresponding web service.
+The corresponding deployment diagram is reported in Fig.~\ref{fig:deployDiagram}. Here it can be seen that the core deployment server hosts four key components, i.e., the incentives manager, the communication middleware, the orchestration manager and the application container (where the application is executed). On the end user smartphone, besides the user application (client), the client of the context manager is also  deployed. The CM client interacts with the corresponding server-side component deployed on the DISI server, where the PM is also hosted. The PS and RM are on the SOTON server. A third-party server is used to host both Google and Twitter peer, which then connect to the corresponding web service. \todo{update diagram}
 \begin{sidewaysfigure}
 %\begin{figure}[!hbt]
  \centering
@@ -88,7 +97,7 @@ The corresponding deployment diagram is reported in Fig.~\ref{fig:deployDiagram}
 \end{sidewaysfigure}
 
 \subsection{Dynamic View}
-Fig.~\ref{fig:dynamic_view} provides a sample dynamic view of how the various components of the SmartSociety platform interact with each other, when running an application based on SmartSociety.\footnote{For the sake of clarity, and as these were developed while integrating the first version of the platform, only interactions among the user application, application, orchestration manager, peer manager, communication middleware and human agents are reported.} 
+Fig.~\ref{fig:dynamic_view} provides a sample dynamic view of how the various components of the SmartSociety platform interact with each other, when running an application based on SmartSociety.\footnote{For the sake of clarity, and as these were developed while integrating the first version of the platform, only interactions among the user application, application, orchestration manager, peer manager, communication middleware and human agents are reported.} \todo{update diagram}
 \begin{sidewaysfigure}
 %\begin{figure}[!hbt]
  \centering

@@ -6,7 +6,8 @@
 %
 
 \documentclass{SmartReport}
-\usepackage{url, rotating}
+\usepackage{url, rotating,todonotes}
+\let\svtodo\todo\renewcommand\todo[1]{\svtodo[inline]{#1}}
 
 \usepackage{subfig}
 
@@ -22,7 +23,7 @@
 \deldate{\today}
 \delowner{Iacopo Carreras, Daniele Miorandi}
 \wpleader{Iacopo Carreras, UH}
-\qualityassessor{Luc Moreau, SOTON \& Ronald Chenu Abente, UNITN}
+\qualityassessor{Luc Moreau, SOTON}
 \smartkeywords{Platform, Prototype, Integration, Validation}
 \maketitle
 
@@ -114,7 +115,7 @@ communication channels between the platform and the peers. \\
 \newpage
 
 \section{Prototype Validation and Testing}
-\label{sec:sw}
+\label{sec:val}
 \input{sections/validation.tex}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
