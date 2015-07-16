@@ -1,24 +1,69 @@
-\todo{@Tommaso: rewrite the section, draw material from the CollaborateCom paper}
-At the moment the platform mainly consists of a runtime allowing the Smart Society application to manage the submission of tasks by the user application. The platform provides also some library (against which the application is compiled) to operate with the current components (SmartCom, Orchestration Manager, Peer Manager). The code is in a private repository at \url{https://gitlab.com/smartsociety/appruntime}.%https://gitlab.com/Teudimundo/smartask}.
+%!TEX root = ../main.tex
+The final version of the application runtime will be heavily dependent on the Programming Framework, which model has been defined in the 7.2 deliverable. The prototype that has been created before this effort has three goals:
+\begin{itemize}
+	\item indentify what the runtime should expect from a generic application
+    \item define a first high level programming API to be provided to the developer
+	\item test the interaction of the platform with different components
+\end{itemize}
+
+At the moment the platform mainly consists of a runtime allowing the Smart Society application to manage the submission of tasks by the user application. The platform provides also some library (against which the application is compiled) to operate with the current components (SmartCom, Orchestration Manager, Peer Manager). The code is in a private repository at \url{https://gitlab.com/smartsociety/appruntime}.
 
 A Smart Society Application has its own identifier, generated during the registration phase. At the moment the application code is written by a developer directly in Java, in the final version the code will be generated through the programming framework. Each time a task is submitted to the application a new application instance is created, each instance has it's own state.
 
 \subsection{Runtime}
-
-When the runtime is run three endpoints are provided: 
+Each application is expected to run in its own process by the smart society runtime. The application will be provided by runtime with a SmartCom and a Orchestrator instances. In order to interact with external entities (such as peers or user applications), the endpoint exposes three endpoints:
 
 \begin{itemize}
 \item {\bf POST:/task/:applicationId/} To submit tasks, the runtime will ask the application to create a \textit{instance initializer} that will take care of the setup phase of the task. The application is expected to carry out all the operation that can be performed before interacting with the peers. The posted data is domain--dependent, and it will be serialized and managed by the application at the moment of instance creation. The runtime associated to the instance (hence the task) creates an identifier that is returned as response.
 
 \item {\bf GET:/task/:applicationId/} To retrieve the status of all or part of the tasks of the application, query parameters can be used in the query and they will be managed by the application that might filter which tasks to show based non them. Note that the status format for each task is just required to be a valid json node (either a text or more complex structures), but it will be completely domain--dependent, in fact the SmartSociety application can send whatever information the user application requires.
 
-\item {\bf GET:/task/:applicationId/:taskId} To retrieve the status of a specific task. As for the previous point both query parameters and the response are domain--dependent. 
+\item {\bf GET:/task/:applicationId/:taskId} To retrieve the status of a specific task. As for the previous point both query parameters and the response are domain--dependent.
 
-\item {\bf POST:/message/:applicationId/} Used by the peer applications to communicate back with the application. To use this endpoint the application must have previously contacted the peer with a message containing a given conversation identifier. Such identifier is used then by the runtime to dispatch the message to the correct application instance, the content of the message is then handled by the application instance that  changes its state according to the information received.
+\item {\bf POST:/message/:applicationId/} Used by the peer applications to communicate back with the application. To use this endpoint the application must have previously contacted the peer with a message containing a given conversation identifier. Such identifier is used then by the runtime to dispatch the message to the correct application instance, the content of the message is then handled by the task runner instance that changes its state according to the information received.
 
 \end{itemize}
 
+In this version the application developer is expected to provide certain functionalities. At application level, includes methods for:
+\begin{itemize}
+ 	\item creating a new task runner that will take care of setting up and carry out the task submitted to the application;
+ 	\item retrieve the active task runners according to some query parameters, this will be used by the querying endpoint.
+\end{itemize}
+The task runner is the instance of a application specific class that will implement a simple interface that will allow the runtime 
+to start the execution and to ask for his status.
+
+
+\subsection{Component Library}
+The component library allows the application development to be abstracted from the real components.
+Component wrappers will give a simple interface to the component that is integrated with the runtime, the developer will be shielded by minor changes in components, and finally testing will be easier as well.
+
+In this section we will give some example of functionalities provided by the component library divided by component.
+\subsubsection{SmartCom}
+The developer does not need to interact directly with the SmartCom: 
+a method is provided for sending a message to a given collective, the programmer is required to provide a specific handler for handling answers to the message. The runtime will take care of receiving answers through the specific REST endpoint (using an ad-hoc) and by using the conversation ID route the answer to the correct handler. The platform provides also an adapter for sending out Android notifications or for contacting peers trough a rest endpoint. Smartcom supports many other kind of adapters (Dropbox, Email, ...) and adding them is straightforward.
+
+\subsubsection{Orchestrator}
+At the application start time an orchestrator is also executed. Communication with the Orchestrator works trough a REST API (a more generalized version of the one presented in the deliverable 6.2), but this part is hidden to the developer, the library makes easy for the developer to make the following requests:
+\begin{itemize}
+	\item submit a task request for composition
+	\item retrieve a specific task request or task
+	\item wait for a negotiable task
+	\item accept a task on behalf of a peer
+	\item perform a trivial negotiation with explicit agreement 
+	\item wait for an agreed task
+\end{itemize}
+
+Because of limitations of the current implementation in the peer manager the prototype's composition consists in retrieving all the peer registered to the application, such a query is performed directly by the Orchestrator.
+
+\subsubsection{Peer Manager}
+The library allow the easy creation of a collective given a collection of peers, the identifier of the collection is the only thing needed by SmartCom to carry out communications transparently to the developer.
+
+\subsubsection{Provenance}
+The runtime provides easy method for logging to the provenance store the generic part of the graph indipendent from the application domain. Some helper function is provided for binding specific data which model cannot be known a priori.
+The communication with Provenance store (happening through a REST API) is hidden to the developer by the library.
+
 \subsection{Monitoring Framework}
+\todo{In the repository there is nothing like that}
 The monitoring framework is responsible for the monitoring of the overall SmartSociety platform and components. It acts as a central collection point for any information which is considered important to ensure the proper functioning of the platform. More in detail, it allows to:
 \begin{itemize}
 \item dynamically collect any kind of monitoring information relevant to monitor the proper functioning pf the platform and its performance. Such information is permanently stored in a non-relational database and available at any time for inspecting specific platform behaviors.
@@ -37,7 +82,7 @@ The Monitoring Dashboard is based on the following architecture and components:
 \caption{Monitoring framework architecture.}
 \end{figure}
 
-The monitoring framewrok is based on Logstash (http://logstash.net/), which is a tool for managing events and logs. Logstash can be used to collect logs, parse them, and store them for later use (like, for search and visualization). Speaking of searching, Logstash comes with a web interface for searching and drilling into all of the logs collected over time.
+The monitoring framework is based on Logstash (http://logstash.net/), which is a tool for managing events and logs. Logstash can be used to collect logs, parse them, and store them for later use (like, for search and visualization). Speaking of searching, Logstash comes with a web interface for searching and drilling into all of the logs collected over time.
 It is possible to define what information shall be permanently store and processed by the monitoring framework. In particular, it is possible to integrate:
 \begin{itemize}
 \item System logs: these logs correspond to logs, which are generated by the various system components such as, e.g., web servers, application servers. 
@@ -56,12 +101,6 @@ The following Figure provides an example of dashboard created over Kibana. The m
 \includegraphics[width=0.8\textwidth]{figs/kibana.pdf}
 \caption{Example of the monitoring framework web interface.}
 \end{figure}
-
-
-\subsection{Component Library}
-
-The component library allows the application development to be abstracted from the real components, allowing easier testing. 
-Furthermore the component wrappers will give a simple interface to the component that is integrated with the runtime.
 
 
 \subsection{Expected evolution}
