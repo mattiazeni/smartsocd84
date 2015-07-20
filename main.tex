@@ -27,10 +27,12 @@
 \smartkeywords{Platform, Prototype, Integration, Validation}
 \maketitle
 
+\newcommand{\mdl}{\textsc{SmartCOM}}
+
 \begin{smartcontributors}
 %%syntax: version number & date & author (institution) & reviewer (individual)\\
 %0.1 & 04/11/2014 & 
-UH & Daniele Miorandi, Iacopo Carreras, Tommaso Schiavinotto \\
+UH & Tommaso Schiavinotto, Daniele Miorandi, Iacopo Carreras\\
 \end{smartcontributors}
 
 %define the abstract
@@ -61,13 +63,17 @@ PF & Programming Framework &  System component in charge of exposing
 appropriate primitives and interfaces to application developers.\\
 \hline 
 PM & Peer Manager &  System component in charge of managing peers.\\
-\hline \\
+\hline 
 PS & Provenance Store & System component in charge of logging actions performed by platform components and peers.\\
 \hline
 RM & Reputation Manager & System componet in charge of handling the reputation of any system resource, including peers. \\
 \hline
 SmartCom & Communication Middleware & System component in charge of managing
 communication channels between the platform and the peers. \\
+\hline
+TEM & Task Execution Manager & System component in charge of
+monitoring the execution of tasks and trigger corrective actions if
+needed.\\
 \hline
 \end{tabular}
 
@@ -133,7 +139,7 @@ communication channels between the platform and the peers. \\
 \bibliographystyle{./IEEEtran}
 \bibliography{BIB/biblio.bib}
 %\clearpage
-%\appendix
-%\section{Details on code}
-%\input{sections/annex1}
+\appendix
+\section{Monitoring component}\label{app:monitoring}
+\input{sections/monitoring}
 \end{document}
