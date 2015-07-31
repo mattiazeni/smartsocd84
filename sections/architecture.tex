@@ -15,7 +15,8 @@ In order to ease inclusion of peers into the platform, interaction via popular c
 \end{figure}
 
 User applications contact the platform through the REST API component.
-All incoming user requests are served by this module that verifies their correctness and dispatches them to the appropriate platform application that will be processing and responding to them. 
+All incoming user requests are served by this module that %verifies their correctness and 
+dispatches them to the appropriate platform application, which will be processing and responding to them. 
 The platform applications run sandboxed in Docker \footnote{\url{https://www.docker.com/}} containers. The applications can be deployed on different (virtual) machines.
 %
 %
@@ -63,10 +64,11 @@ A brief description of the functionality of the components integrated is reporte
 
 \item \textbf{Orchestration Manager}: it provides two key functionalities: composition and negotiation~\cite{D6.2}. Composition takes task requests as inputs and generates tasks by solving constraint satisfaction problems specific to each application, potentially interacting with the peer manager (so that peer with certain capabilities can be identified) and the reputation service (so that the reputation of the capable peers can be obtained). The composition determines (i) the peers which can potentially execute such task, and (ii) the necessary interactions and/or external services which are needed to execute such task.  The negotiation manager is in charge of handling the negotiation process with peers in order to ensure that the services and resources required to carry out the task are actually present. %The Orchestration Manager (OM) is developed within WP6 and its description can be found in~\cite{D6.2}.
 
-\item \textbf{Peer Manager}: it is responsible for managing all peer-related information~\cite{D4.3}. This includes their profile, as well as any other information which will be used by the Orchestration Manager for identifying possible peers that can execute a given task.  It maintains a profile of each peer, which
+\item \textbf{Peer Manager}: it is responsible for managing peer-related information~\cite{D4.3}. This includes their profile, as well as any other information which will be used by the Orchestration Manager for identifying possible peers that can execute a given task.  It maintains a profile of each peer, which
 represents a model thereof in terms of knowledge, resources and
 capacity. It provides a peer search functionality that is used by the Orchestration Manager to create compositions. Besides individual peers, the Peer Manager also manages collectives, which are groups of peers characterized by specific properties. %Besides managing peer-related information, 
-The Peer Manager is also in charge of protecting the user's privacy. 
+The Peer Manager includes a set of mechanisms for ensuring the user's privacy~\cite{D4.3}.
+%s also in charge of protecting the user's privacy. 
 %The Peer Manager embeds a Knowledge Base (KB), which contains an agreed ontology about peers, task, workflows, incentives, etc. The KB provides the domain terminology, as well as all the semantic relations between terms. The KB is responsible for ensuring that all component share a common understanding of the inputs/outputs between any two parties of the platform. The overall KM is divided into domains, which allow to capture the diversity of the entities being part of SmartSociety. A semantic reasoner will allow to perform semantic queries over the KB. %The Peer Manager (PM) is developed within WP4 and its description can be found in~\cite{D4.3} .
 
 \item \textbf{Task Execution Manager:} %\todo{Add description, take from slides resulting from the Frankfurt meeting with WP3/WP6} 
@@ -74,13 +76,13 @@ The TEM takes as input a description of the task under execution and data about 
 
 \item \textbf{Context Manager}: it is responsible for monitoring the context the agent represented on the platform by a peer is in~\cite{D3.2}. For an individual human agent, this includes, e.g., tracking the location and recognizing the activity the agent is currently involved in. This can be further used to trigger context adaptation in applications. %The Context Manager (CM) is developed within WP3 and a high-level description can be found in~\cite{D3.2}.
 
-\item \textbf{Reputation Manager}: it handles the reputation of any system resource, including peers ~\cite{D2.3}. It computes the reputation of a given peer based on feedback from other peers.% and users. %It uses data from the provenance store in order to carry out the computation. Reputation is based on various metrics that the system will be able to compute, starting from peers' execution of tasks. 
+\item \textbf{Reputation Manager}: it handles the reputation of any system resource, including peers ~\cite{D2.3}. It computes the reputation of a given peer based on feedback from other peers. % and users. %It uses data from the provenance store in order to carry out the computation. Reputation is based on various metrics that the system will be able to compute, starting from peers' execution of tasks. 
 Reputation information can be exposed directly to application users or used by the PM in the selection of suitable peers for a given task. %The Reputation Manager (RM) is developed within WP2. A description of the RM can be found in ~\cite{D2.3}.
 
 %\item \textbf{Knowledge Base}: it is shared among the various components of the platform, and contains an agreed ontology about peers, task, workflows, incentives, etc. It provides the domain terminology, as well as all the semantic relations between terms. In particular, the knowledge base is responsible for ensuring that all component share a common understanding of the inputs/outputs between any two parties of the platform. The overall knowledge base will be divided into domains, which allow to capture the diversity of the entities being part of SmartSociety. A semantic reasoner will allow to perform semantic queries over the knowledge base.
 
-\item \textbf{Provenance Store}: it logs actions performed by platform
-components and peers according to the W3C PROV recommendation~\cite{D2.2}. In particular, the provenance store is the component responsible for keeping a record of how the overall compositions are being created, executed and how the data managed by the platform is being transformed. %It will play a fundamental role in the evaluation of peers reputation. %, as well as in ensuring that the system as a whole enforces the proper privacy constraints imposed by the peers.
+\item \textbf{Provenance Service}: it logs descriptionf of actions performed by platform
+components and peers, as well as information flows between them, according to the W3C PROV recommendation~\cite{D2.2}. In particular, the provenance store is the component responsible for keeping a record of how the overall compositions are being created, executed and how the data managed by the platform is being transformed. %It will play a fundamental role in the evaluation of peers reputation. %, as well as in ensuring that the system as a whole enforces the proper privacy constraints imposed by the peers.
 %It further supports an explanation service, which is able to visualize provenance trails and convert them in natural language. The Provenance Store (PS) is developed within WP2. A description of the PS can be found in~\cite{D2.2}.
 
 \item {\bf Monitoring and analysis service}: it logs and monitors the platform jobs and can be used by platform administrators to perform root-cause analysis and to extract analytics on the performance of the system. 

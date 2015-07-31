@@ -7,9 +7,9 @@ The final version of the application runtime will be heavily dependent on the Pr
 	\item To test the interaction of the platform with the different components.
 \end{itemize}
 
-At the moment the platform mainly consists of a runtime allowing a Smart Society application to manage the submission of tasks by the user application. The platform provides also some library (against which the application is compiled) to operate with the current components (SmartCom, Orchestration Manager, Peer Manager). The code is in a private repository at \url{https://gitlab.com/smartsociety/appruntime}.
+At the moment the platform mainly consists of a runtime allowing a Smart Society application to manage the submission of tasks by the user application. The platform provides also some library (against which the application is compiled) to operate with the current components (SmartCom, Orchestration Manager, Peer Manager, Provenance Service). The code is in a private repository at \url{https://gitlab.com/smartsociety/appruntime}.
 
-A Smart Society Application has its own identifier, generated during the registration phase. At the moment the application code is written by a developer directly in Java; in the final version of the platform the code will be generated dynamically through the programming framework. %Each time a task is submitted to the application a new application instance is created, each instance with its own state.
+A Smart Society Application has its own identifier, generated during the registration phase. Currently, the application code has to be written by a developer directly in Java; in the final version of the platform, the code will be generated dynamically through the programming framework. %Each time a task is submitted to the application a new application instance is created, each instance with its own state.
 
 \subsection{Runtime}
 Each application is expected to run in its own process by the SmartSociety runtime. The application will be provided by runtime with a SmartCom and a Orchestrator instances. In order to interact with external entities (such as peers or user applications), the runtime exposes three endpoints:
