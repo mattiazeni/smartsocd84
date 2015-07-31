@@ -1,4 +1,6 @@
 %!TEX root = ../main.tex
+At the moment the platform mainly consists of a runtime allowing a Smart Society application to manage the submission of tasks by the user application. The platform provides also some library (against which the application is compiled) to operate with the current components (SmartCom, Orchestration Manager, Peer Manager, Provenance Service). The code is in a private repository at \url{https://gitlab.com/smartsociety/appruntime}.
+
 The final version of the application runtime will be heavily dependent on the Programming Framework, whose model has been defined in~\cite{D7.2}. The current prototype has been developed with the following aims: 
 % has been created before this effort has three goals:
 \begin{itemize}
@@ -7,23 +9,21 @@ The final version of the application runtime will be heavily dependent on the Pr
 	\item To test the interaction of the platform with the different components.
 \end{itemize}
 
-At the moment the platform mainly consists of a runtime allowing a Smart Society application to manage the submission of tasks by the user application. The platform provides also some library (against which the application is compiled) to operate with the current components (SmartCom, Orchestration Manager, Peer Manager, Provenance Service). The code is in a private repository at \url{https://gitlab.com/smartsociety/appruntime}.
-
 A Smart Society Application has its own identifier, generated during the registration phase. Currently, the application code has to be written by a developer directly in Java; in the final version of the platform, the code will be generated dynamically through the programming framework. %Each time a task is submitted to the application a new application instance is created, each instance with its own state.
 
 \subsection{Runtime}
-Each application is expected to run in its own process by the SmartSociety runtime. The application will be provided by runtime with a SmartCom and a Orchestrator instances. In order to interact with external entities (such as peers or user applications), the runtime exposes three endpoints:
+Each application is expected to run in its own process by the SmartSociety runtime. The application will be provided by runtime with a SmartCom and a Orchestrator instances. In order to interact with external entities (such as peers or user applications), the runtime exposes three kinds of resources:
 
 \begin{itemize}
 \item {\bf POST:/task/:applicationId/} To submit tasks, the runtime will ask the application to create an \textit{instance initializer} that will take care of the setup phase of the task. The application is expected to carry out all the operation that can be performed before interacting with the peers. The posted data is domain--dependent, and it will be serialized and managed by the application at the moment of instance creation. The runtime associated to the instance (hence the task) creates an identifier that is returned as response for further usage.
 
-\item {\bf GET:/task/:applicationId/} This endpoint is used to query the status of one or multiple tasks. Query parameters can be used to specify a filter on the tasks of interest. 
+\item {\bf GET:/task/:applicationId/} This resource is used to query the status of one or multiple tasks. Query parameters can be used to specify a filter on the tasks of interest. 
 %all or part of the tasks of the application, query parameters can be used in the query and they will be managed by the application that might filter which tasks to show based non them. Note that t
 The status format for each task is just required to be a valid json node (either a text or more complex structures) and it is completely domain--dependent. %, in fact the SmartSociety application can send whatever information the user application requires.
 
 \item {\bf GET:/task/:applicationId/:taskId} Used to retrieve the status of a specific task. As for the previous point both query parameters and the response are domain--dependent.
 
-\item {\bf POST:/message/:applicationId/} Used by the peer applications to communicate back with the application. To use this endpoint the application must have previously contacted the peer with a message containing a given conversation identifier. Such identifier is used then by the runtime to dispatch the message to the correct application instance. The content of the message is then handled by the task runner instance that changes its state according to the information received.
+\item {\bf POST:/message/:applicationId/} Used by the peer applications to communicate back with the application. To use this endpoint the application must have previously contacted the peer with a message containing a given conversation identifier. Such identifier, which is passed as a specific field in the message body, is used  by the runtime to dispatch the message to the correct application instance. The content of the message is then handled by the task runner instance that changes its state according to the information received.
 \end{itemize}
 
 In v.2.0 of the platform, the application developer is expected to provide certain functionalities. This includes methods for:
@@ -36,7 +36,7 @@ The task runner is the instance of an application-specific class, which implemen
 
 \subsection{Component Library}
 The component library allows the application development to be abstracted from the actual implementation of the components.
-Component wrappers provide a simple interface to the component integrated with the runtime, so that the developer will be shielded by minor changes in components. %, and finally testing will be easier as well.
+Component wrappers provide a simple interface to the component integrated with the runtime, so that the developer is shielded from minor changes in components. %, and finally testing will be easier as well.
 
 In this section we briefly describe the functionality % give some example of functionalities 
 provided by the component library. % divided by component.
@@ -44,13 +44,14 @@ provided by the component library. % divided by component.
 The developer does not need to interact directly with \mdl: 
 a method is provided for sending a message to a given collective, the programmer is required to provide a specific handler for handling answers to the message. The runtime will take care of receiving answers through the specific REST endpoint 
 %(using an ad-hoc) 
-and by using the conversation ID route the answer to the correct handler. The platform provides also an adapter for sending out Android notifications or for contacting peers trough a REST endpoint. Other supported adapters (Dropbox, Email, ...) can be easily added. 
+and, by using the conversation ID, it will route the answer to the correct handler. The platform provides also an adapter for sending out Android notifications or for contacting peers trough a REST endpoint. Other supported adapters (Dropbox, Email, ...) can be added easily. 
 %and adding them is straightforward.
 
 \subsubsection{Orchestration Manager}
 When the application is launched %At the application start time 
 an orchestration manager (OM) is also executed. Communication with the OM works trough a REST API (a generalized version of the one presented in~\cite{D6.2}). % but this part is hidden to the developer, 
-The library makes easy for the developer to make the following requests:
+The library supports the %makes easy for the developer to make the 
+following requests:
 \begin{itemize}
 	\item Submit a task request for composition;
 	\item Retrieve a specific task request or task;
@@ -60,14 +61,15 @@ The library makes easy for the developer to make the following requests:
 	\item Wait for an agreed task.
 \end{itemize}
 
-Because of limitations of the current implementation of the PM the composition consists in retrieving all the peer registered to the application; this query is %, such a query is 
-performed directly by the OM.
+%%DM: removed 31/7, too negative
+%Because of limitations of the current implementation of the PM the composition consists in retrieving all the peer registered to the application; this query is %, such a query is 
+%performed directly by the OM.
 
 \subsubsection{Peer Manager}
-The library allows the easy creation of a collective given a collection of peers. The identifier of the collective is the only thing needed by SmartCom to carry out communications transparently to the developer.
+The library allows the easy creation of a collective given a collection of peers. The identifier of the collective is the only information needed by SmartCom to carry out communications with all the relevant peers. %transparently to the developer.
 
 \subsubsection{Provenance}
-The runtime provides easy methods for logging on the provenance store the generic (i..e, independent from the application domain) part of the provenance graph. % indipendent from the application domain.
+The runtime provides easy methods for logging on the provenance store the generic (i..e, independent from the application domain) part of the provenance graph. This includes actions such as, e.g., creation of a task, creation of a collective etc. The domain-dependent part of the provenance graph shall be specified by the application developer.% indipendent from the application domain.
 Some helper function is provided for binding specific data whose model cannot be known a priori.
 The communication with provenance store (happening through a REST API) is hidden to the developer by the library.
 
@@ -116,6 +118,8 @@ The monitoring framework is responsible for the monitoring of the overall SmartS
 
 \subsection{Expected evolution}
 
-In the future version of the platform each application and its runtime will be containerized. A service for routing the requests from general endpoints to the right application runtime will be included.
+In the future version of the platform each application and its runtime will run in separate containers. This will provide isolation among different applications and will support faster application deployment and portability across machines. A service for routing the requests from general endpoints to the right application runtime will be included.
 
 The way the runtime will evolve and its interaction with applications are highly dependent on the outcome of the programming model and programming framework specification efforts currently ongoing within WP7.
+
+In terms of integration of other components, the roadmap foresees to integrate in the upcoming months the context manager (which will interact strictly with the peer manager), the reputation maanager, the task execution manager and the incentive server.

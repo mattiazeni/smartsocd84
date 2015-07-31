@@ -9,7 +9,7 @@ In order to ease inclusion of peers into the platform, interaction via popular c
 
 \begin{figure}[t]
  \centering
- \includegraphics[width=0.8\linewidth]{figs/platform-architecture}
+ \includegraphics[width=\linewidth]{figs/architecture_v2}%platform-architecture}
  \caption{SmartSociety platform users and architecture.}
  \label{fig:architecture}
 \end{figure}
@@ -81,7 +81,7 @@ Reputation information can be exposed directly to application users or used by t
 
 %\item \textbf{Knowledge Base}: it is shared among the various components of the platform, and contains an agreed ontology about peers, task, workflows, incentives, etc. It provides the domain terminology, as well as all the semantic relations between terms. In particular, the knowledge base is responsible for ensuring that all component share a common understanding of the inputs/outputs between any two parties of the platform. The overall knowledge base will be divided into domains, which allow to capture the diversity of the entities being part of SmartSociety. A semantic reasoner will allow to perform semantic queries over the knowledge base.
 
-\item \textbf{Provenance Service}: it logs descriptionf of actions performed by platform
+\item \textbf{Provenance Service}: it logs descriptions of actions performed by platform
 components and peers, as well as information flows between them, according to the W3C PROV recommendation~\cite{D2.2}. In particular, the provenance store is the component responsible for keeping a record of how the overall compositions are being created, executed and how the data managed by the platform is being transformed. %It will play a fundamental role in the evaluation of peers reputation. %, as well as in ensuring that the system as a whole enforces the proper privacy constraints imposed by the peers.
 %It further supports an explanation service, which is able to visualize provenance trails and convert them in natural language. The Provenance Store (PS) is developed within WP2. A description of the PS can be found in~\cite{D2.2}.
 
