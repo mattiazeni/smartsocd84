@@ -1,9 +1,26 @@
-This report describes the version 2.0 of the SmartSociety platform. The corresponding software components can be accessed at the following integrated repository:
-\url{https://gitlab.com/smartsociety/}\footnote{A login/password has been created for reviewers: SmartSocietyReviewer/sm@rts0c13tyr3v13w3r}.%https://gitlab.com/Teudimundo/smartask}
+This report describes the final version of the SmartSociety platform. The corresponding software toolbox can be accessed at the following integrated repository:
+\url{https://gitlab.com/smartsociety/}
+% \footnote{A login/password has been created for reviewers: SmartSocietyReviewer/sm@rts0c13tyr3v13w3r}
 
-The version 2.0 builds upon the first version, which was delivered as D8.2~\cite{D8.1}. During the period M25-M30, the integration work continued along the roadmap included in D8.2~\cite{D8.2} leading to the integration of the provenance service, to the development and integration of the monitoring component, to the integration of the new version of the peer manager and to a refactoring of the runtime in order to align with the development of the programming model in WP7. Furthermore, some lab experiments were carried out to test and validate the platform functionalities and its ability to support the complete application life-cycle. 
+% \todo{Put everything in a public repository (!) - check with partners}
 
-The report is organized as follows. Sec.~\ref{sec:arch} includes a revised description of the platform architecture. Sec.~\ref{sec:sw} describes the artifacts that constitute the platform prototype. Sec.~\ref{sec:val} describes the validation and testing activities and their outcomes. Sec.~\ref{sec:concl} concludes the report providing a roadmap for activities between M30 and M48.
+The SmartSociety platform integrates the technical components, and provides the hooks to be able to operate a HDA-CAS. Generally speaking, a HDA-CAS is composed by peers (individuals, machines and collectives representing ensembles of the aforementioned) which coalesce around (and is enabled by) a service/application, which may run on top of the SmartSociety platform. The platform itself is therefore a technology enabler for the service/application which gives rise to the HDA-CAS. 
+
+From the technical standpoint, the platform is shipped as a toolbox, and it includes eight components, each one performing a well-defined functionality and accessible through REST APIs. Functionality exposed by the components can be accessed directly or by means of a set of programmer-friendly primitives, supported by a purposefully developed runtime library. Java bindings are provided as part of the toolbox. 
+
+The core components of the toolbox are released as open source form under a liberal licensing scheme (Apache v.2\footnote{http://www.apache.org/licenses/LICENSE-2.0}). This is in line with the mission of the SmartSociety, where the platform plays a pivotal role in allowing researchers, Web entrepreneurs and startup companies to quickly prototype, deploy and experiment with applications and services based upon hybrid and diversity-aware collectives.
+
+% \todo{For reviewers only: add on enhancements since v. 2.0}
+The final version of the platform builds upon v.2.0, which was delivered as D8.2~\cite{D8.2}. The enhancements include:
+\begin{itemize}
+\item Integration of the Task Execution Manager (TEM), the component in charge of monitoring the execution of tasks and identify deviations from the plan (and, in case, call the Orchestration Manager to provide a new plan);
+\item Integration of the Incentive Server (IS), the component providing on-line recommendations on how to improve peer engagement;
+\item Integration of the programming framework (PF), which provides primitives for programmers to easily access the platform functionalty.
+\end{itemize}
+
+% During the period M25-M30, the integration work continued along the roadmap included in D8.2~\cite{D8.2} leading to the integration of the provenance service, to the development and integration of the monitoring component, to the integration of the new version of the peer manager and to a refactoring of the runtime in order to align with the development of the programming model in WP7. Furthermore, some lab experiments were carried out to test and validate the platform functionalities and its ability to support the complete application life-cycle. 
+
+The remainder of the deliverable is organized as follows. Sec.~\ref{sec:arch} describes the platform architecture and the overall functionality. Sec.~\ref{sec:sw} describes the platform components and their interfaces. Sec.~\ref{sec:val} describes how the platform can be used to build CASs and includes some basic examples. Sec.~\ref{sec:concl} concludes the report with an outlook on the future of the platform and its potential exploitation, together with some ethics considerations on the usage of the platform.
 
 %Starting from the analysis of requirements and initial platform architecture in D8.1~\cite{D8.1}, WP8 undertook an intense dialogue with technical workpackages (WP2-WP7) in order to ensure full alignment of the top-level platform architecture and of the scientific and technical outcomes of WP2-WP7. The main result of this first phase was a revised architecture of the SmartSociety platform, which is presented in Sec.~\ref{sec:arch}. During the second half of the year the actual integration of components started, resulted in a 'minified' version of the platform, which integrates the Peer Manager (PM), the Orchestration Manager (OM) and the Communication Middleware (CM), plus an application runtime. For such aforementioned components, the interfaces used are summarised in Sec.~\ref{sec:apis}. The platform-level APIs and functionality are described in Sec.~\ref{sec:sw}. The missing components will be integrated during the third year according to the roadmap outlined in Sec.~\ref{sec:concl}.
 

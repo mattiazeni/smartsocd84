@@ -1,0 +1,115 @@
+\subsection{Reputation Service}
+\subsubsection{Functionality and Features}
+The reputation service provides storage for and access to feedback and reputation reports, for SmartSociety applications.
+\subsubsection{Implementation}
+\subsubsection{Interfaces, Endpoints and Resources Exposed}
+The API currently describes three resources, applications, feedback, and reputation, which are documented below. These API calls are relative to the service’s endpoint, and this service is hosted at https://smartshare.ecs.soton.ac.uk/rs/.
+The following actions are available on the service’s resources:
+1. GET application/:app/subject/byURI/:subject uri/ Retrieve a subject’s in- formation by its URI. The subject uri must be percentage encoded.
+(a) Response Object
+The response object and version object are described in Tables 1a and 1a.
+versionInfo
+an object specifying the version of information contained about a subject.
+subject uri
+the subject’s URI
+feedback
+a list of feedback reports about the subject.
+currentReputationReport
+the current reputation report for a subject.
+reputation reports
+a list of reputation reports about a subject.
+associatedWithEvents
+a list of events a subject is associated with through feedback reports.
+hasRole
+a list roles the subject has played in feedback re- ports.
+Table 1: Response Object
+Table 2: VersionInfo Object
+(b) SmartSociety Example with Authentication via Peer Manager Request
+hasAnchor
+the current URI of the subject’s information.
+previousVersion
+the previous URI of the subject’s information.
+
+
+2. GET application/:app/subject/:subject/ Retrieve information about the sub- ject with the given ID.
+versionInfo an object specifying the version of information contained about a subject.
+subject uri
+the subject’s URI
+feedback
+a list of feedback reports about the subject.
+currentReputationReport
+the current reputation report for a subject.
+reputation reports
+a list of reputation reports about a subject.
+associatedWithEvents
+a list of events a subject is associated with through feedback reports.
+hasRole
+a list roles the subject has played in feedback re- ports.
+
+
+
+
+3. POST application/:app/feedback/ Save a new feedback report. (a) Request Body
+The request body is a JSON object and it is described in Table 3a. The feedback object contains a set of categories and values which a subject is rated on.
+
+application uri
+ 
+URI of the Application associated with the feed- back.
+event uri
+URI of the event associated with the feedback.
+sub jects
+A list of subjects that a feedback report is about.
+authors
+A list of authors that authored the feedback re- port.
+feedback
+An object containing feedback categories and rat- ings about the subject/s.
+Table 5: Request Body
+Table 6: Subject Object
+Table 7: Author Object
+subject uri
+A subject’s URI.
+quantifier uri
+ 
+The quantifier URI, which defines the subject’s role in the event.
+author uri
+An author’s URI.
+quantifier uri
+ 
+The quantifier URI, which defines the author’s role in the event.
+
+
+GET application/:app/reputation/:reputation/ Retrieve the raw reputation report with the given ID.
+(a) Response Object
+The response object and version object are described in Tables 3b.
+Table 9: Response Object
+(b) SmartSociety Example with Authentication via Peer Manager
+ 
+timestamp
+The timestamp of the feedback report’s submis- sion.
+json
+A list of categories and ratings which the sub- ject/s were rated.
+sub jects
+A list of subject/s that the reputation report is about.
+reputation id
+The id of the reputation report.
+uri
+The URI of the reputation report.
+
+
+GET application/:app/opinionOf/:author/aboutSubject/:subject/ Retrieve the raw reputation report about a subject authored by an author.
+(a) Response Object
+The response object and version object are described in Tables 1a and 1a.
+opinion value
+ 
+A value representing an opinion of the author about a subject.
+timestamp
+A timestamp taken when the opinion was gener- ated.
+uri
+URI of the opinion.
+sub jects
+The subject of which the opinion is about.
+authors
+The author whose feedback reports pertaining to the subject were used to generate the opinion value.
+
+
+\subsubsection{Repository}

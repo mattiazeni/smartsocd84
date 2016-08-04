@@ -1,0 +1,84 @@
+\subsection{Task Execution Manager}
+\subsubsection{Functionality and Features}
+The TEM is the module of the smartsociety framework which acts as a monitoring platform between the Orchestration Manager and Context Manager/Peer Manager. All it does is to add a separate functionality to the accepted tasks in OM and add the respective monitors to that task. Those monitors are then constnatly updated by CM/PM and the subsequent updates are sent to the OM. So, there is not business logic implemente on TEM side other than acting as the mediating agent between different modules.
+
+will monitor the execution of tasks, especially those involving “offline” actions by peers and collectives, although including also online actions. Secondly, it will perform the sensor and knowledge fusion described in previous sections and offer high-level information about the execution progress of tasks to the rest of the SmartSociety platform.
+These agreed functional requirements for the Execution Monitor include:
+• For each task to be monitored the Execution Monitor will get as an input from the ⃝c SmartSociety Consortium 2013-2017 27 of 93
+ 
+⃝c SmartSociety Consortium 2013-2017 Deliverable D3.3
+Orchestration Manager (OM):
+– a description of the task whose execution has to be monitored; and
+– the IDs of the peers involved in the execution
+• At the same time the Execution Monitor will also have access to:
+– sensory data from the client (normally from an app running in a cellphone) related to the peers involved in the execution and;
+– mid and high-level data derived by sensor fusion in time and user input
+• Using these two sources the Execution Monitor should produce an output to inform
+the Orchestration manager of:
+– the progress of a given tasks; and
+– possible deviations that occur during the execution of this task, big deviations should be properly expressed to allow the Orchestration Manager to react in a timely manner
+
+Task Execution Manager (TEM): this component interacts with the PM and the OM. The main function of the TEM is to act as an overarching monitoring com- ponent integrating the real time evolution of a given task, through the PM, and proactively adapt it and match it to the requirements defined by the OM.
+
+This document gives the overview of the API’s and data model for the task execution
+
+manager. The functionality implemented by TEM API’s consists of following steps.
+
+● Task monitors
+
+● Update task monitors
+
+● Terminate the monitoring of the tasks
+
+○ Getting the accepted tasks from the orchestration
+
+○ Adding the monitors to that task
+
+○ Updating the currently monitored tasks
+
+\subsubsection{Implementation}
+The TEM is implemented in javascript using the node.js framework. Express is using for the REST API implementation and a MongoDB instance for storing data locally.
+
+\subsubsection{Interfaces, Endpoints and Resources Exposed}
+2. API’S
+
+The API’s for the Task Execution Manager are listed as below:
+
+S.No. Verb Endpoint Description
+
+1 GET /monitorTask get all the tasks
+
+which are being
+
+monitored by
+
+TEM
+
+2 POST /monitorTask add the task to
+
+the TEM with
+
+appropriate
+
+monitors
+
+3 PUT /updateMonitor/:rideRequestID update the
+
+4 DELETE /terminateTaskMonitor/:rideReques
+
+tID
+
+monitor of a task
+
+in TEM
+
+terminate the
+
+monitoring of a
+
+task
+
+5 GET /terminatedTasks get all the
+
+terminated tasks
+\subsubsection{Repository}

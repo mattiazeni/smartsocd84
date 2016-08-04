@@ -1,13 +1,47 @@
 %!TEX root = ../main.tex
-At the moment the platform mainly consists of a runtime allowing a Smart Society application to manage the submission of tasks by the user application. The platform provides also some library (against which the application is compiled) to operate with the current components (SmartCom, Orchestration Manager, Peer Manager, Provenance Service). The code is in a private repository at \url{https://gitlab.com/smartsociety/appruntime}.
+In this section we describe the software artifacts being produced, together with a description of their APIs.
 
-The final version of the application runtime will be heavily dependent on the Programming Framework, whose model has been defined in~\cite{D7.2}. The current prototype has been developed with the following aims: 
-% has been created before this effort has three goals:
-\begin{itemize}
-	\item To identify what the runtime should expect from a generic application;
-    \item To define a first high level API to be provided to application developers;
-	\item To test the interaction of the platform with the different components.
-\end{itemize}
+\input{sections/om}
+
+\input{sections/pm}
+
+\input{sections/cm}
+
+\input{sections/is}
+
+\input{sections/tem}
+
+\input{sections/prov}
+
+\input{sections/rs}
+
+\input{sections/smartcom}
+
+\input{sections/monitor}
+
+
+
+
+
+
+
+
+
+
+
+
+% At the moment the platform mainly consists of a runtime allowing a Smart Society application to manage the submission of tasks by the user application. The platform provides also some library (against which the application is compiled) to operate with the current components (SmartCom, Orchestration Manager, Peer Manager, Provenance Service). The code is in a private repository at \url{https://gitlab.com/smartsociety/appruntime}.
+
+% The document also presented the overall execution context of the programming model and the corresponding high-level language constructs used to manipulate them. The lan- guage constructs represent an API for the implementation of the programming model as a Java library executable on the SmartSociety platform runtime being developed in WP8.
+
+
+% The final version of the application runtime will be heavily dependent on the Programming Framework, whose model has been defined in~\cite{D7.2}. The current prototype has been developed with the following aims: 
+% % has been created before this effort has three goals:
+% \begin{itemize}
+% 	\item To identify what the runtime should expect from a generic application;
+%     \item To define a first high level API to be provided to application developers;
+% 	\item To test the interaction of the platform with the different components.
+% \end{itemize}
 
 A Smart Society Application has its own identifier, generated during the registration phase. Currently, the application code has to be written by a developer directly in Java; in the final version of the platform, the code will be generated dynamically through the programming framework. %Each time a task is submitted to the application a new application instance is created, each instance with its own state.
 
