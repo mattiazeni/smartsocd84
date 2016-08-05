@@ -1,0 +1,243 @@
+A Smart Society Application has its own identifier, generated during the registration phase. Currently, the application code has to be written by a developer directly in Java; in the final version of the platform, the code will be generated dynamically through the programming framework. %Each time a task is submitted to the application a new application instance is created, each instance with its own state.
+\todo{take from D6.2}
+
+
+Programmers are expected to interact with the SmartSociety platform functionality through the programming framework (PF). While direct usage of the component-level APIs described in the previous section is possible, it is deprecated. The PF instantiates the programming model defined in~\cite{D7.2}, that we briefly summarise here for the sake of consistency. 
+
+
+
+The key notion is that of a Collective-Based Task (CBT), an object encapsulating all the necessary logic for managing complex collective-related operations: team provisioning and assembly, execu- tion plan composition, human participation negotiations, and finally the execution itself. These operations are provided by various SmartSociety platform components, which ex- pose a set of APIs used by the programming model libraries. During the lifetime of a CBT, various Collectives related to the CBT are created and exposed to the developer for further (arbitrary) use in the remainder of the code, even outside of the context of the originating CBT or its lifespan. 
+
+At CBT’s core is a state machine (Fig. 3) managing transitions between states rep- resenting the eponymous phases of the task lifecycle: provisioning, composition, ne- gotiation and execution. An additional state, named continuous orchestration, is used to represent a state combining composition and negotiation under specific conditions, as explained in Table 1.
+
+
+The notion of collective is very general. Sometimes it used to denote a stable group or category or peers based on the common properties, but not necessarily with any person- al/professional relationships (e.g., ‘Java developers’, ‘students’, ‘Milano residents’, peers registered with a specific application); in other cases, the term collective was used to refer to a team— a group of people gathered around a concrete task. The former type of collec- tives is more durable, whereas the latter one is short-lived. Therefore, we make following distinction in the programming model:
+A Resident Collective (RC) is an entity defined by a persistent PeerManager iden- tifier, existing across multiple application executions, and possibly different applications. Resident collectives can be created, altered and destroyed also fully out of scope of the code managed by the programming model. The control of who can access and read a resident collective is enforced by the PeerManager. For those resident collectives accessible from the given application, a developer can read/access individual collective members as well as all accessible attributes defined in the collective’s profile. When accessing or creating a RC, the programming model either passes to the PeerManager a query and constructs it from returned peers, or an ID to get an existing PeerManager collective. In either case, in the background, the programming model will pass to the PeerManager its credentials. So, it is up to the PeerManager to decide based on the privacy rules which peers will get exposed (returned). For example, for ‘TrentoResidents’ we may get all Trento residents who have nothing against participating in a new (our) application, but not necessarily all Trento residents from the PeerManager’s database. By default, the newly-created RC remains visible to future runs of the application that created it, but not to other applica- tions. PeerManager can make them visible to other applications as well. At least one RC must exist in the application, namely the collective representing all peers visible to the application.
+Application-Based Collective (ABC). Differently from a resident collective, an ABC’s lifecycle is managed exclusively by the SmartSociety application. Therefore, an ABC cannot be accessed outside of an application, and ceases to exist when the appli- cation’s execution stops. The ABCs are initially created by applying certain operations on resident collectives. Differently than resident collectives, an ABC is an atomic entity for the developer, meaning that individual peers cannot be explicitly known or accessed from an ABC instance. This means that an ABC instance is immutable. The ABC is the
+20 of 48 http://www.smart-society-project.eu
+ 
+Deliverable 7.2 ⃝c SmartSociety Consortium 2013-2017
+embodiment of the principle of collectiveness, making the collective an atomic, first-class citizen in our programming model. Concretely, the following rules regulate the ABCs lifecycle:
+• An ABC can be created:
+– implicitly, as intermediate products of different states of CBT execution (e.g.,
+‘provisioned’, ‘agreed’).
+– explicitly, by using dedicated collective manipulation operators:
+∗ to clone a resident collective.
+∗ as a result of a set operation on two other Collectives (either RC or ABC).
+• An ABC has a lifetime equal to that of the application where it was created.
+– the lifecycle of an ABC is managed by the SmartSocietyApplicationContext
+(CTX) (Sec. 2.4)
+– Developer cannot explicitly delete them; they are cleaned up by the runtime when the object representing the application is finalized.
+• An ABC is:
+– immutable for the developer.
+– atomic for the developer (i.e., individual peers cannot be accessed from it).
+The context object (Sec. 2.4) registers and keeps the collective’s kind. 
+
+The application context (CTX) represents a particular instance of the SmartSociety ap- plication (class SmartSocietyApplicationContext). It can be described in more detail with the following claims:
+• There must be exactly 1 CTX instance per application run. Therefore, CTX is singleton.
+• CTX instance keeps all values, overall application state and metadata initialized for the application run. Therefore, all initialization methods are over CTX.
+• CTX represents the application, therefore it possesses the internal business logic to track lifecycles of all created ABC instances, and other entities created for the purpose of the application.
+
+During the CTX initialization the developer provides the required information that will be used during the application execution (Section 2.4). The programming model allows the developer to submit such information through the following methods:
+• void updateInternaProfile(ProfileSchema profileSchema, Profile profile): the internal profile is created and updated, in case of creation the profileSchema is also provided to the peer-manager;
+• void registerUserProfileSchema(ProfileSchema profileSchema): the schema of the profile that will be used to store user data;
+void collectiveForKind(String kind, CollectiveDescriptor descriptor): for each collective kind a corresponding descriptor is registered;
+• void registerBuilderForCBTType(String cbtType, CBTBuilder builder): this method specify how CBT of a certain type can be built. Several CBTBuilder implementations can be provided as part of the programming model library, in par- ticular there is one based on OMProxy to make use of an external Orchestration Manager.
+
+The CBT is instantiated through a CBTBuilder. Builders are registered at CTX initialization time and associated to a CBT type (Sec- tion 3.1). Once the right type builder is retrieved all the expected parameters must be passed to the builder (according to its actual type), and then the build must be called (as shown in Listing 1).
+CBT cbt = ctx.getCBTBuilder("RideSharingType")
+3 .of(CollaborationType.OC) //Enum: OC, OD, OC_OD
+4 .forInputCollective(c)
+5 .forTaskRequest(t)
+6 .withNegotiationArgs(myNegotiationArgs)
+7 .build();
+
+he basic method for checking the lifecycle state is the following. It returns an enumeration CBTState with the active state of the CBT.
+• CBTState getCurrentState() – Returns the currents state.
+We additionally provide the following utility (pretty-print) methods for comparing the state of execution:
+• boolean isAfter(CBTState compareWith) – returns true if the CBT has finished executing the ‘compareWith’ state; this also includes waiting on the subsequent state. Throws exception if the comparison is illogical.
+• boolean isBefore(CBTState compareWith) – returns true if the CBT has not yet started executing the ‘compareWith’ state; this also includes waiting for the ‘com- pareWith’ state. Throws exception if the comparison is illogical.
+• boolean isIn(CBTState compareWith) – checks if ‘compareWith’ is equal to the return value of getCurrentState().
+
+Upon instantiating a CBT, the developer defines whether the state transitioning should happen automatically, or be explicitly controlled. In order to check for these states, we expose the following set of methods:
+• boolean isWaitingForProvisioning()
+• boolean isWaitingForComposition()
+• boolean isWaitingForNegotiation()
+• boolean isWaitingForContinuousOrchestration()
+• boolean isWaitingForStart() – waiting in the initial state to enter any main
+state.
+Furthermore, we have the following related methods:
+• boolean isRunning() – – true in every other state except initial or final.
+• boolean isDone() – true only in final state (either success or fail), not matter
+whether we arrived in it through success or one of the fail states.
+
+To allow the developer to control CBT transitions explicitly the developer is offered the following constructs to get/set the flags used in guarding conditions and wake up the CBT’s thread if it was waiting on this flag:
+• get/setDoCompose(boolean tf)
+• get/setDoNegotiate(boolean tf) • get/setDoExecute(boolean tf)
+By default, the CBT gets instantiated with all flags set to true. We also provide a convenience method that will set at once all flags to true/false:
+• setAllTransitionsTo(boolean tf)
+
+Since from the initial state we can transition into more than one state, for that we use
+the method:
+• void start() – allows entering into provisioning or continuous orchestration state (depending which of them is the first state). Non-blocking call.
+Additionally, CBT exposes a number of additional methods to match up to the methods offered by the Java 7 Future API:
+• TaskResult get() – waits if necessary for the computation to complete (until is- Done() == true), and then retrieves its result. Blocking call.
+• TaskResult get(long timeout, TimeUnit unit) – same as above, but throwing appropriate exception if timeout expired before the result was obtained.
+• boolean cancel(boolean mayInterruptIfRunning) – attempts to abort the over- all execution in any state and transition directly to the final fail-state. The original Java 7 semantics of the method is preserved.
+• boolean isCancelled() – Returns true if CBT was canceled before it completed. The original Java 7 semantics of the method is preserved.
+
+A CBT object exposes the following methods for fetching the ABCs created during CBT’s lifecycle:
+• Collective getCollectiveInput() – returns the collective that was used as the input for the CBT.
+• ABC getCollectiveProvisioned() – returns the ‘provisioned’ collective
+• ABC getCollectiveAgreed() – returns the ‘agreed’ collective.
+• List<ABC> getNegotiables() – returns the list of negotiable collectives.
+
+As noted in Section 2.3 resident collectives (RCs) are created by querying the PeerManager via the following static methods of the ResidentCollective class:
+• ResidentCollective createFromQuery(PeerMgrQuery q, string to kind) – Cre- ates and registers a collective with the PeerManager. It is assumed that the kind entity describing the new collective has been properly registered and initialized with CTX. When contacting PeerManager we pass also the ID of the application, and we assume that PeerManager checks (with the help of the programming model run- time) whether we are allowed to create a collective of the requested kind, and filters out only those peers whose privacy settings allow them to be visible to our appli- cation’s queries. The registered kind descriptor in the CTX allows this method to know how to properly transform the attributes from the entities obtained from the PeerManager to those expected by the target kind.
+• ResidentCollective createFromID(string ID, string to kind) – Creates a lo- cal representation of an already existing collective on the PeerManager, with a pre- existing ID. Invocation of this method will not create a collective on PeerManager, so in case of passing a non-existing collective ID an exception is thrown. This method allows us to use and access externally defined RCs. When contacting PeerManager we pass also the ID of the application, and we assume that the PeerManager checks
+32 of 48 http://www.smart-society-project.eu
+   
+Deliverable 7.2 ⃝c SmartSociety Consortium 2013-2017
+whether we are allowed to access the requested a collective, and filters out only those peers whose privacy settings allow them to be visible to our application’s queries. The registered kind descriptor in the CTX allows this method to know how to prop- erly transform the attributes from the entities obtained from the PeerManager to those expected by the target kind.
+On the other hand, ABCs are created from existing collectives (both RCs and ABCs) through the following static methods of the Collective class:
+• ABC copy(Collective from, [string to kind)] – Creates an ABC instance of kind to kind. Peers from collective from are copied to the returned ABC instance. If to kind is omitted, the kind from collective from is assumed.
+• ABC join(Collective master, Collective slave, [string to kind)]) – Cre- ates an ABC instance, containing the union of peers from Collectives master and slave. The resulting collective must be transformable into to kind. The last argu- ment can be omitted if both master and slave have the same kind.
+• ABC complement(Collective master, Collective slave, [string to kind)]) – Creates an ABC instance, containing the peers from Collective master after re- moving the peers present both in master and in slave. The resulting collective must be transformable into to kind. The last argument can be omitted if both master and slave have the same kind.
+• void persist() – Persist the collective on PeerManager. RCs are already persisted, so in this case the operation defaults to renaming. In case of an ABC, the PeerMan- ager persists the collective as RC. However, this does not mean that the developer is able to subsequently fetch that RC and access the collective members. This decided by the CTX and PeerManager based on the ABC’s kind.
+For reading the ABC’s attributes, the following ABC class method is used:
+• Attribute GetAttribute() – searches attributes fields then returns a clone of the
+found Attribute, if any present.
+⃝c SmartSociety Consortium 2013-2017 33 of 48
+        
+⃝c SmartSociety Consortium 2013-2017 Deliverable 7.2
+3.6 Collective-level communication
+Programming model fully relies on the messaging and virtualization middleware Smart- Com9 developed within T7.1 for supporting the communication with peers and collectives. Programming model allows at the moment only a basic set of communication constructs, namely those for sending a message to a hybrid collective, and receiving responses from it:
+• void send(Message m) throws CommunicationException – Send a message to the collective. Non-blocking. Does not wait for the sending to succeed or fail. Errors and exceptions thereafter will be sent to the Notification Callback.
+• Identifier registerNotificationCallback(NotificationCallback onReceive) – Register a notification callback method that will be called when new messages from the collective are received. The returned Identifier is used for unsubscribing.
+• void unregisterNotificationCallback(Identifier callback)–unregisterapre- viously registered callback.
+These methods are invokable on any Collective object.
+
+
+
+3.7 Examples
+3.7.1 Initializing a CBT
+void ctx_initialization() {
+/* Registering OMProxy based builder for CBT of type "RideSharing" */ MyOMProxy omproxy = new MyOMProxy ();
+CBTBuilder builderWithOMProxy = new OMProxyBasedCBTBuilder(omproxy); ctx.registerBuilderForCBTType("RideSharing", builderWithOMProxy);
+/* Registering another CBT type for which library provided handlers are used. */
+CBTBuilder patternBasedCBTBuilder = new PatternBasedCBTBuilder ();
+ctx.registerBuilderForCBTType("SimpleTask", patternBasedCBTBuilder); }
+/* this method is called for requests requiring a "RideSharing" CBT */
+CBT get_CBT_for_rideSharing(TaskRequest request) { CBT cbt =
+ctx.getCBTBuilder("RideSharing") .of(CollaborationType.OC)
+.forInputCollective(c) //c is some input collective .forTaskRequest(request) .withNegotiationArguments(5, TimeUnit.Days) .build();
+}
+/* this method is called for requests involving a "SimpleTask" request */
+CBT get_CBT_for_rideSharing(TaskRequest request) { CBT cbt =
+}
+ctx.getCBTBuilder("SimpleTask")
+.of(CollaborationType.OC)
+.forTaskRequest(request) .withCompositionArguments(CompositionPattern.USE_PROVIDED_COLLECTIVE) .withNegotiationArguments(
+.build();
+NegotiationPattern.AGREEMENT_RELATIVE_THRESHOLD , 0.6)
+Listing 2: CBT initialization
+ Listing 2 shows an example of how a CBT can be initialized. The pieces of code are grouped in dummy methods for presentation purposes.
+The CTX initialization phase (lines 1-11) is executed after the CTX has been cre- ated. The developer must provide a CBTBuilder for each type of CBT that is going to be used during the application lifetime. Two different types are registered RideSharing and SimpleTask, for each of them a different builder is provided. For the sake of usabil- ity, a support library provided along with the programming model will provide several CBTBuilder implementations.
+⃝c SmartSociety Consortium 2013-2017 35 of 48
+⃝c SmartSociety Consortium 2013-2017 Deliverable 7.2
+For the type RideSharing the developer decide to use an OMProxy, the OMProxy is instantiated in advance (the CTX is not involved), and then it is used to create a generic builder based on OMProxy (a library provided one). Also for SimpleTask type the developer makes use of a given builder. Comparing the CBT creation code for the two types (lines 13-21 for the RideSharing type, lines 23-32 for SimpleTask), one can appreciate the consistency of the CBTBuilder interface. However the different builder implementations will require different arguments for the creation of handlers. For instance in the example the OMProxy based builder requires to have a timeout for the Negotiation and the user can create it. Note how for some handler no parameter is passed, this might means that the builder do not allow any parametrization for the handler creation, or they might provide a default behavior. In the second example the developer does not provide a input collection, it specifies instead the behavior both for the composition and the negotiation.
+3.7.2 Manipulating and reusing collectives
+Consider an application that uses SmartSociety platform to assemble ad-hoc, on-demand programming teams to build software artifacts. For this purpose, two CBT types are registered with CTX: “MyJavaProgrammingTask” and “MyJavaTestingTask”. First, the developer creates a RC javaDevs containing all accessible Java developers from the Peer- Manager. This collective is used as the input collective of the progTask CBT. progTask is instantiated as an on-demand collective task, meaning that the composition state will be skipped, since the execution plan in implied from the task request myImplementationTReq.
+The collective is first processed in the provisioning phase, where a subset of program- mers with particular skills are selected and a joint code repository is set for them to use. The output of the provisioning state is the ‘provisioned’ collective, a CBT-built ABC collective, containing the selected programmers. Since it is atomic and immutable, the exact programmers which are members of the team are not known to the application developer10.
+The negotiation pattern will select the first 50% of the provisioned developers into the ‘agreed’ collective that will ultimately execute the programming task. After the prog- Task’s this ABC becomes exposed to the developer, which uses it to construct another collective, containing Java developers from the ‘provisioned’ collective that were not se-
+10The rationale here is similar to cloud computing – the user specifies the infrastructural requirements and constraints and the platform takes care to provision this infrastructure, without letting the user care about which particular VM instances are used.
+36 of 48 http://www.smart-society-project.eu
+  
+Deliverable 7.2 ⃝c SmartSociety Consortium 2013-2017
+lected into the ‘agreed’ one. This collective is then used to perform the second CBT testTask, which takes as input the output of the first CBT.
+  18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+...
+assume negotiation on progTask done ...
+Collective testTeam; //will be ABC
+if (progTask.isAfter(CBTState.NEGOTIATION)) {
+// out of provisioned developers, use the other half for testing
+testTeam = Collective.complement(
+progTask.getCollectiveProvisioned(), progTask.getCollectiveAgreed());
+}
+while (!progTask.isDone()) { /* do stuff or block on condition */} TaskResult progTRes = progTask.get();
+if (! progTRes.isQoRGoodEnough()) return;
+CBT testTask = ctx.getCBTBuilder("MyJavaTestingTask") .of(CollaborationType.OD)
+1 2 3 4 5 6 7 8 9
+Collective javaDevs = ResidentCollective.createFromQuery(myQry,"JAVA_DEVS");
+CBT progTask = ctx.getCBTBuilder("MyJavaProgrammingTask") .of(CollaborationType.OD)
+.forInputCollective(javaDevs) .forTaskRequest(myImplementationTReq) .withNegotiationArguments(
+NegotiationPattern.AGREEMENT_RELATIVE_THRESHOLD , 0.5) .build();
+10
+11
+12
+13
+14 // 15 // 16 // 17
+progTask.start();
+/*...*/
+.forInputCollective(javaDevs) .forTaskRequest(new TaskRequest(progTRes)) .withNegotiationArguments(
+NegotiationPattern.AGREEMENT_RELATIVE_THRESHOLD , 1.0) .build();
+ Listing 3: Using the ‘agreed’ and ‘provisioned’ ABCs to obtain a third collective that will be used in another task. Also, using the outcome of one CBT in another one.
+
+
+The following code snippet shows some examples of interacting with CBT lifecycle. An on-demand CBT named cbt is initially instantiated. For illustration purposes we make sure that all transition flags are enables (true by default), then manually set do negotiate to false, to force cbt to block before entering the negotiation state, and start the CBT. While CBT is executing, arbitrary business logic can be performed in parallel. At some point, the CBT is ready to start negotiations. At that moment, for the sake of demon- stration, we dispatch the motivating messages (or possibly other incentive mechanisms) to the human members of the collective, and let the negotiation process begin. Finally, we block the main thread of the application waiting on the cbt to finish or the specified timeout to elapse, in which case we explicitly cancel the execution.
+   1 2 3 4 5 6 7 8 9
+CBT cbt = /*... assume on_demand = true ... */
+cbt.setAllTransitionsTo(true); //optional cbt.setDoNegotiate(false);
+cbt.start();
+while (cbt.isRunning() && !cbt.isWaitingForNegotiation()) { //do stuff...
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27 }
+28 29 30 31
+}
+for (ABC negotiatingCol : cbt.getNegotiables() {
+negotiatingCol.send(new SmartCom.Message("Please accept this task")); // negotiatingCol.applyIncentive("SOME_INCENTIVE_ID");
+} cbt.setDoNegotiate(true);
+try {
+result = cbt.get(5, TimeUnit.HOURS); //blocks until done, but max 5 hours // do something with result
+}catch(TimeoutException ex) {
+if (cbt.getCollectiveAgreed() != null){
+cbt.getCollectiveAgreed().send(
+new SmartCom.Message("Thank you anyway, but too late."));
+cbt.cancel(true); }
+//...

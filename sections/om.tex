@@ -1,169 +1,42 @@
 \subsection{Orchestration Manager}
 \subsubsection{Functionality and Features}
-The OM provides collective composition and negotiation functionality. They can be invoked subsequently or jointly (in the latter case we talk about continuous orchestration, see~\cite{D6.2} for a detailed description. The OM takes as input task requests and outputs an agreed execution plan. 
+The OM provides collective composition and negotiation functionality. They can be invoked subsequently or jointly (in the latter case we talk about continuous orchestration, see~\cite{D6.2} for a detailed description). The OM takes as input task requests and outputs an agreed execution plan. 
 \subsubsection{Implementation}
-The OM implementation shipped with the toolbox is written in Javascript and based upon the node.js framework. It uses express for REST APIs, jade as node template and includes a mongoDB instance for persistency. Two versions are provided, supporting AskSmartSociety! and SmartShare applications. They can be easily reused to develop application-specific OMs.
+The OM implementation shipped with the toolbox is written in {\tt JavaScript} and based upon the {\tt node.js} framework. It uses {\tt express} for REST APIs, {\tt jade} as node template and includes a {\tt MongoDB} instance for persistency. Two versions are provided, supporting AskSmartSociety! and SmartShare applications. They can be easily reused to develop application-specific OMs.
 \subsubsection{Interfaces, Endpoints and Resources Exposed}
-\todo{taken from D2.3 - appendix}
-For convenience we split the API into different sections.
-B.1.1 Task Requests
-We start with task requests. The most basic operations are listed in the following table:
- 
-verb
-URI
-POST
-/applications/:app/taskRequests
-GET
-/applications/:app/taskRequests/?user=:user
-GET
-/applications/:app/taskRequests/:taskRequestID
-HEAD
-/applications/:app/taskRequests/:taskRequestID
-GET
-/applications/:app/taskRequests/:taskRequestID/v/:version
-DELETE
-/applications/:app/taskRequests/:taskRequestID
-Create Task Request: POST /applications/:app/taskRequests This is the main URI where new task requests are posted. The JSON object describing the task request is expected in the body of the request. On success a platform call to the composition manager will be made.
-Access Control. Any peer or user.
-Success. Returns error code 201 together with
-• a JSON document of the form {
-28 of 57
-http://www.smart-society-project.eu
-Deliverable D2.3 ⃝c SmartSociety Consortium 2013-2017 data: aURI
-}
-where aURI is the URI where the client can retrieve (assuming authentication and access control policies have no issues) the latest version of the task request that has been posted, and optionally
-• an ETag for the JSON object of the response.
-
-
-Get Task Requests of User:
-GET /applications/:app/taskRequests/?user=:user apart from authentication purposes (in the header).
-Access Control. The peer user or an admin. Success. Returns error code 200 together with
-• a JSON document of the form {
-No parameters are expected
-      data: [[userTaskRequestsURIs], [associatedETags]]
-    }
-
-    Get a Task Request:
-GET /applications/:app/taskRequests/:taskRequestID No parameters are ex- pected apart from authentication information (if needed).
-Access Control. The owner of the task request or an admin.
-Success. Returns error code 200 together with the JSON document of the latest
-version of the task request accompanied by the ETag of the document.
-Failure. Returns an error code (403, 404) together with an optional error message.
-Get the Head of a Task Request:
-HEAD /applications/:app/taskRequests/:taskRequestID Similar to
-GET /applications/:app/taskRequests/:taskRequestIDexceptthatthebodyreturned is empty. It just returns the ETag of the latest version of the task request to indicate if there has been a change to the document and thus we need to retrieve its latest version. The access control policy is similar as above; the owner of the task request or an admin can perform the operation.
-Get a Specific Version of a Task Request:
-GET /applications/:app/taskRequests/:taskRequestID/v/:version No param- eters are expected apart from authentication purposes (if needed).
-Access Control. The owner of the task request or an admin.
-Success. Returns error code 200 together with the specific version of the task request. Failure. Returns an error code together with an optional error message.
-Delete a Task Request: DELETE /applications/:app/taskRequests/:taskRequestID
-This is the main URI for deleting task requests. No parameters are expected apart from authentication information (in the header). A platform job is prepared and is posted to the deletion manager.
-Access Control. The owner of the task request or an admin.
-
-B.1.2 Tasks
-Tasks are generated through composition (more on that below). The most basic operations related to them are listed in the following table:
- 
-verb
-URI
-GET
-/applications/:app/tasks/:taskID
-HEAD
-/applications/:app/tasks/:taskID
-GET
-/applications/:app/tasks/:taskID/v/:version
-PUT
-/applications/:app/tasks/:taskID
-Get a Specific Task: GET /applications/:app/tasks/:taskID Similar to GET /applications/:app/taskRequests/:taskRequestID but referring to tasks. No param- eters are expected apart from authentication information (if needed).
-Access Control. The participants of the task or an admin.
-Success. Returns error code 200 together with the JSON document of the latest
-version of the task accompanied by the ETag of the document.
-Failure. Returns an error code (403, 404) together with an optional error message.
-Get the Head of a Task: HEAD /applications/:app/tasks/:taskID Similar as above but the body of the response is empty. Essentially this is an easy way for the clients to figure out if the resource has changed. Same access control policy as above.
-Get a Specific Version of a Task:
-GET /applications/:app/tasks/:taskID/v/:version No parameters are expected apart from authentication information (if needed).
-Access Control. The participants of the task or an admin.
-⃝c SmartSociety Consortium 2013-2017 31 of 57
-⃝c SmartSociety Consortium 2013-2017 Deliverable D2.3 Success. Returns error code 200 together with the specific version of the task.
-Failure. Returns an error code together with an optional error message.
-Negotiate on a Task: PUT /applications/:app/tasks/:taskID The main call for negotiation which will trigger an additional platform call to the negotiation manager. Expects the new version of the document of the task taskID. A platform job for negotiation is prepared and is posted to the negotiation manager.
-Access Control. The participants of the task or an admin.
-Success. Returns error code 200 together with the new version of the task as is
-dictated by the negotiation manager.
-Failure. Returns an error code together with an optional error message.
-B.1.3 Task Records
+We start with task requests:
+\begin{itemize}
+\item {\bf POST /applications/:app/taskRequests} This is the main URI where new task requests are posted. The JSON object describing the task request is expected in the body of the request. On success a platform call to the composition manager will be made.
+\item {\bf GET /applications/:app/taskRequests/?user=:user} Get all task requests posted by a given user.
+\item {\bf GET /applications/:app/taskRequests/:taskRequestID} Get details on a given task request.
+\item {\bf HEAD /applications/:app/taskRequests/:taskRequestID} Get the head of a given task request.
+\item {\bf GET /applications/:app/taskRequests/:taskRequestID/v/:version} Get a specific version of a given task request.
+\item {\bf DELETE /applications/:app/taskRequests/:taskRequestID} Delete a task request.
+\end{itemize}
+Tasks are generated through composition. The most basic operations related to them are listed in the following table:
+\begin{itemize}
+\item {\bf GET /applications/:app/tasks/:taskID} Get a specific task (latest version).
+\item {\bf GET /applications/:app/tasks/:taskID} Get the head of a specific task.
+\item {\bf GET /applications/:app/tasks/:taskID/v/:version} Get a specific version of a given task.
+\item {\bf PUT applications/:app/tasks/:taskID} Negotiate on a task. The main call for negotiation which will trigger an additional platform call to the negotiation manager. Expects the new version of the document of the task taskID. A platform job for negotiation is prepared and is posted to the negotiation manager.
+\end{itemize}
 Task records are generated by the orchestrator once execution can start on a specific task. The most basic operations are listed in the following table:
- 
-verb
-URI
-GET
-/applications/:app/taskRecords/:taskRecordID
-HEAD
-/applications/:app/taskRecords/:taskRecordID
-GET
-/applications/:app/taskRecords/:taskRecordID/v/:version
-PUT
-/applications/:app/taskRecords/:taskRecordID
-
-Get a Specific Task Record:
-GET /applications/:app/taskRecords/:taskRecordID No parameters are expected apart from authentication information (if needed).
-Access Control. The participants of the task or an admin.
-Success. Returns error code 200 together with the json document of the latest version
-of the task record accompanied by the ETag of the document.
-
-Get the Head of a Task Record:
-HEAD /applications/:app/taskRecords/:taskRecordID No parameters are ex- pected apart from authentication information (if needed).
-The body of the response is empty. This is another convenience function which allows an easy way for the clients to figure out if the resource has changed. Same access control policy and error codes as above.
-Get a Specific Version of a Task Record:
-GET /applications/:app/taskRecords/:taskRecordID/v/:version No parameters are expected apart from authentication purposes (if needed).
-Access Control. The participants of the task or an admin.
-Success. Returns error code 200 together with the specific version of the task. Failure. Returns an error code together with an optional error message.
-Provide Execution Feedback:
-PUT /applications/:app/taskRecords/:taskRecordID The main call for execu- tion which will trigger an additional platform call to the execution manager. Expects the new version of the task record document taskRecordID. A platform job for execution is prepared and is posted to the execution manager.
-Access Control. The participants of the task or an admin.
-Success. Returns error code 200 together with the new version of the task as dictated
-by the execution manager.
-Failure. Returns an error code together with an optional error message.
-
-B.2 Composition Manager
+\begin{itemize}
+\item {\bf GET /applications/:app/taskRecords/:taskRecordID} Get a specific task record.
+\item {\bf HEAD /applications/:app/taskRecords/:taskRecordID} Get the head of specific task record. This is another convenience function which allows an easy way for the clients to figure out if the resource has changed.
+\item {\bf GET /applications/:app/taskRecords/:taskRecordID/v/:version} Get a specific version of a given task record.
+\item {\bf PUT /applications/:app/taskRecords/:taskRecordID} Provide execution feebdack. The main call for execu- tion which will trigger an additional platform call to the execution manager. Expects the new version of the task record document taskRecordID. A platform job for execution is prepared and is posted to the execution manager.
+\end{itemize}
 The composition manager provides the following functionality:
-verb
-URI
-POST
-/applications/:app/compositions
-GET
-/applications/:app/compositions/:compositionID
-
-Perform Composition: POST /applications/:app/compositions Expects the plat- form job with the description, for which the main ingredient is the new task request that has arrived on the platform.
-Access Control. The orchestrator for the application app can make such a call.
-Returns. The call always succeeds and generates a resource describing the outcome of composition. Upon completion it returns an error code 201 and the link to the document with the results of composition. Part of the description of the document with the results of the composition is the error code and message that is returned through the call POST /applications/:app/taskRequests to the client.
-Get Composition Results:
-GET /applications/:app/compositions/:compositionID No parameters are ex- pected.
-Access Control. The orchestrator for the application app or an admin can make such a call.
-Success. Returns error code 200, the JSON document with the description of the results of the composition together with the associated ETag for the document.
-Failure. Returns an error code (e.g. 404 not found) together with an optional error message.
-Comment. Normally such a call is expected to happen only once from the applica- tion orchestrator once the latter has received the 201 error code that the composition that was requested has been performed.
-
-B.3 Negotiation Manager
-The negotiation manager provides the following functionality.
-Perform Negotiation: POST /applications/:app/negotiations Expects the plat- form job with the description, for which the main ingredient is the task on which negoti- ation is being performed.
-Access Control. The orchestrator for the application app can make such a call.
-Returns. The call always succeeds and generates a resource describing the outcome of negotiation. Upon completion it returns an error code 201 and the link to the document with the results of the negotiation. Part of the description of the document with the results of the negotiation is the error code and message that is returned through the call PUT /applications/:app/tasks/:taskID to the client.
-Get Negotiation Results:
-GET /applications/:app/negotiations/:negotiationID No parameters are expected.
-Access Control. The orchestrator for the application app or an admin can make such a call.
-Success. Returns error code 200, the JSON document with the description of the results of the negotiation together with the associated ETag for the document.
-Failure. Returns an error code (e.g. 404 not found) together with an optional error message.
-Comment. Normally such a call is expected to happen only once from the applica- tion orchestrator once the latter has received the 201 error code that the negotiation that was requested has been performed.
-⃝c SmartSociety Consortium 2013-2017 35 of 57
- 
-verb
-URI
-POST
-/applications/:app/negotiations
-GET
-/applications/:app/negotiations/:negotiationID
-
-
-
+\begin{itemize}
+\item {\bf POST /applications/:app/compositions} Perform composition. Expects the platform job with the description, for which the main ingredient is the new task request that has arrived on the platform. The orchestrator for the application app can make such a call.
+\item {\bf GET /applications/:app/compositions/:compositionID} Get composition results.  Normally such a call is expected to happen only once from the application orchestrator once the latter has received the 201 error code that the composition that was requested has been performed.
+\end{itemize}
+The negotiation manager provides the following functionality:
+\begin{itemize}
+\item {\bf POST /applications/:app/negotiations} Perform negotiation. Expects the platform job with the description, for which the main ingredient is the task on which negotiation is being performed.
+Access Control. The call always succeeds generates a resource describing the outcome of negotiation. Upon completion it returns an error code 201 and the link to the document with the results of the negotiation. Part of the description of the document with the results of the negotiation is the error code and message that is returned through the call {\bf PUT /applications/:app/tasks/:taskID} to the client.
+\item {\bf GET /applications/:app/negotiations/:negotiationID} Get negotiation results. Normally such a call is expected to happen only once from the application orchestrator once the latter has received the 201 error code that the negotiation that was requested has been performed.
+\end{itemize}
 \subsubsection{Repository}
 The OM code is available (Apache v.2) at: \url{https://gitlab.com/smartsociety/orchestration}
