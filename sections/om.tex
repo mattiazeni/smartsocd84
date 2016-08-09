@@ -4,6 +4,7 @@ The OM provides collective composition and negotiation functionality. They can b
 \subsubsection{Implementation}
 The OM implementation shipped with the toolbox is written in {\tt JavaScript} and based upon the {\tt node.js} framework. It uses {\tt express} for REST APIs, {\tt jade} as node template and includes a {\tt MongoDB} instance for persistency. Two versions are provided, supporting AskSmartSociety! and SmartShare applications. They can be easily reused to develop application-specific OMs.
 \subsubsection{Interfaces, Endpoints and Resources Exposed}
+\todo{@Zhenyu/Michael: please check}
 We start with task requests:
 \begin{itemize}
 \item {\bf POST /applications/:app/taskRequests} This is the main URI where new task requests are posted. The JSON object describing the task request is expected in the body of the request. On success a platform call to the composition manager will be made.

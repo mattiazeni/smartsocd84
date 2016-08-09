@@ -6,12 +6,13 @@ The PM was designed with the objective of keeping the information owned by peers
 Not applicable, the PM is owned by University of Trento and implementation details are not made public.
 \subsubsection{Interfaces, Endpoints and Resources Exposed}
 % \todo{add from https://docs.google.com/spreadsheets/d/1UlRKshoALlSzmJYZVLkuzAGTUukdFKaONlKqPmd3RWo/edit#gid=0}
+\todo{@Ronald: please check}
 We divide APIs in chapters. Let us start with the security ones:
 \begin{itemize}
 \item {\bf POST /security/login} Used for authentication. The call includes as parameters an identifier and a password, and returns, among the other data, a token to be used for further interactions with the platform.
 \item {\bf POST /security/logout} Log the peer out of the PM.
 \item {\bf GET /person} Read the person of a given logged user. 
-\item {\bf GET /person\_sl?username=:username&password=:password} Register a new human peer. Returns a peer ID. 
+\item {\bf GET /person\_sl?username=:username\&password=:password} Register a new human peer. Returns a peer ID. 
 \end{itemize}
 The second set of APIs cover management operations:
 \begin{itemize}
@@ -45,4 +46,4 @@ The second set of APIs cover management operations:
 \item {\bf DELETE /users/id} Delete user: deletes the user with the given id.
 \end{itemize}
 \subsubsection{Repository}
-Not applicable, the PM is owned by the University of Trento. 
+Not applicable, the PM is owned by the University of Trento and not disclosed. 
