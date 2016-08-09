@@ -1,5 +1,19 @@
 \subsection{Provenance Service}
 \subsubsection{Functionality and Features}
+Provenance is information about entities, activities, and people involved in producing a piece of data or thing, which can be used to form assessments about its quality, reliability or trustworthiness. The Provenance Service includes a specialised store for managing provenance records~\footnote{ProvStore, \url{https://provenance.ecs.soton.ac.uk/store/}} and an aggregator of provenance types able to generate provenance summary reports. More details on the vocabulary to be used for HDA-CAS can be found in~\cite{D2.4}. The provenance service allows to create and retrieve provenance templates and bindings, which are subsequently used for logging actions on the platform. 
+
 \subsubsection{Implementation}
+The provenance service is developed in Python and uses the Django framework.
+
 \subsubsection{Interfaces, Endpoints and Resources Exposed}
+\begin{itemize}
+\item {\bf POST template/} Post a template: Posts a provenance template to the Provenance Store (https://provenance.ecs.soton.ac.uk/store/). The data posted must contain key value pairs for prov and template\_name.
+\item {\bf GET template/:template/} Get a template: Returns a JSON object detailing the template's id, name, version and a URI linking to where the template is stored in the Provenance Store.
+\item {\bf POST binding/} Post a provenance binding to the Provenance Store. The data posted must contain key value pairs for prov, template\_name, and binding\_name, it can optionally contain a version\_id.  When a binding is submitting without specifying a version, it is associated with the latest version of a template with template\_name.
+\item {\bf GET binding/:binding/} Get a binding: returns a JSON object detailing the binding's id, name, and a URI linking to where the binding is stored in the Provenance Store.
+\item {\bf POST template/name/} Get all versions of a template: returns a JSON object containing all template versions with a specified name.
+\end{itemize}
+
 \subsubsection{Repository}
+The {\tt prov} package (a library for W3C provenance data model) is used by the PS and can be downloaded (MIT License) from \url{https://pypi.python.org/pypi/prov}.
+The PS codebase can be found at: \url{https://gitlab.com/smartsociety/submitbindings}

@@ -4,7 +4,7 @@ The Incentive Server analyzes in real-time user interaction and behaviour data w
 \subsubsection{Implementation}
 The incentive server is written in Python, and uses the Django framework. 
 \subsubsection{Interfaces, Endpoints and Resources Exposed}
-\todo{taken from https://docs.google.com/document/d/1lqdWNfu0RzNBStf5ddGREBBI1ftwA5azfV6bpvOImmY/edit}
+% \todo{taken from https://docs.google.com/document/d/1lqdWNfu0RzNBStf5ddGREBBI1ftwA5azfV6bpvOImmY/edit}
 \begin{itemize}
 \item {\bf POST /login} Login Action. Used by external applications to obtain access to the intervention server (IS). Must be performed before any other operation access to the IS.
 \item {\bf GET /api/incentive} Get all incentives types from the IS.
@@ -15,4 +15,4 @@ The incentive server is written in Python, and uses the Django framework.
 \end{itemize}
 The IS can be configured to work in push mode, sending incentives to an application; more details on how to do it are in~\cite{D5.4}. In the same document the functioning of the endpoint for retrieving behavioural data and inputting it to the IS is also described.
 \subsubsection{Repository}
-The incentive server implementtation can be found at: \url{https://gitlab.com/smartsociety/IncentiveServer}
+The incentive server implementation can be found at: \url{https://gitlab.com/smartsociety/IncentiveServer}
