@@ -1,11 +1,48 @@
 \subsection{Peer Manager}
 \subsubsection{Functionality and Features}
-The Peer Manager (PM) is a fundamental building block of the SmartSociety platform, providing a peer-centered data store that maintains and manages information about human- or machine-based peers within a privacy-preserving framework.
-2.1 Mechanisms and algorithms
-The PM was designed as an extension of the notion of existing identity management sys- tems3, with the objective of keeping the information owned by peers private. In order to provide a flexible management of information, the PM builds upon the notion of an entity-centric semantic enhanced model that defines an extensible set of entity schemas providing the templates for an attribute-based representation of peers’ characteristics [2]. Additionally, the PM defines a storage and privacy protection model by adding privacy reg- ulations and considerations [3]. The design of this model pays special attention to different privacy issues discussed by the Council of Europe in its recommendation cm/rec(2010)13 on profiling [4], as well as basic legal privacy principles enacted by the eu Data Protec- tion Directive 95/46/ec [5] and that affects profiles when they involve the storage and processing of personal data.
+The Peer Manager (PM) provides a peer-centered data store that maintains and manages information about human- or machine-based peers within a privacy-preserving framework.
+The PM was designed with the objective of keeping the information owned by peers private. In order to provide a flexible management of information, the PM builds upon the notion of an entity-centric semantic enhanced model that defines an extensible set of entity schemas providing the templates for an attribute-based representation of peers’ characteristics~\cite{D4.2}. Additionally, the PM defines a storage and privacy protection model by adding privacy regulations and considerations. The PM is designed to comply with the recent General Data Protection Regulation (GDPR) (Regulation (EU) 2016/679).
 \subsubsection{Implementation}
 Not applicable, the PM is owned by University of Trento and implementation details are not made public.
 \subsubsection{Interfaces, Endpoints and Resources Exposed}
-\todo{add from https://docs.google.com/spreadsheets/d/1UlRKshoALlSzmJYZVLkuzAGTUukdFKaONlKqPmd3RWo/edit#gid=0}
+% \todo{add from https://docs.google.com/spreadsheets/d/1UlRKshoALlSzmJYZVLkuzAGTUukdFKaONlKqPmd3RWo/edit#gid=0}
+We divide APIs in chapters. Let us start with the security ones:
+\begin{itemize}
+\item {\bf POST /security/login} Used for authentication. The call includes as parameters an identifier and a password, and returns, among the other data, a token to be used for further interactions with the platform.
+\item {\bf POST /security/logout} Log the peer out of the PM.
+\item {\bf GET /person} Read the person of a given logged user. 
+\item {\bf GET /person\_sl?username=:username&password=:password} Register a new human peer. Returns a peer ID. 
+\end{itemize}
+The second set of APIs cover management operations:
+\begin{itemize}
+\item {\bf GET /search}. General search machinery. Check~\cite{D4.3} for more explanations on the query language to be used. 	
+\item {\bf POST /collectives} Create collective: create a collective structure from a set of usernames.
+\item {\bf GET /collectives/identifier}	Return the usernames of all peers in a collective.				
+\item {\bf DELETE /collectives/} Delete the collective with a given id.	
+\item {\bf GET /types} Return the names and id of all the types defined in the peer manager.
+\item {\bf GET /types/id} Return a list of all the attributes for the given type id.
+\item {\bf POST /instances} Create a new instance from a given type and its attributes values. 
+\item {\bf GET /instances/id} Return the type and the attribute values for the given instance.
+\item {\bf PUT /instances/id} Update one or more attributes for a given instance id (only attributes passed as in this call will be affected).											
+\item {\bf DELETE /instances/id } Delete the instance structure with the given id.						
+\item {\bf POST /profiles} Create a new profile from an existing instance, a transformation and a policy.
+\item {\bf GET /profiles/id} Read profile by id: returns the type, the transformation, the policy and the attribute values for the given profile. 
+\item {\bf DELETE /profiles/id} Delete profile by id: delete the profile structure with the given id.	
+\item {\bf POST /transformations}  Create a new transformation specifying the source type, the destination type and the attribute transformations to be performed.
+\item {\bf GET /transformations/id} Read transformation by id: return the source type, the destination type, and the attribute transformations for the given transformation.									
+\item {\bf DELETE /transformations/id} Delete transformation by id: delete the transformation structure with the given id.	
+\item {\bf POST /policies} Create a new policy by specifying its use concept and validity limit.		
+\item {\bf GET /policies/id} Read policy by id: return the use concept and validity limit for the given policy.
+\item {\bf DELETE /policies/id} Delete policy by id: delete the policy structure with the given id.		
+\item {\bf POST /peers}	Create peer: create a new peer by specifying its main entity.			
+\item {\bf GET /peers/id} Read peer: read the main entity and defined profiles for a peer.
+\item {\bf PUT /peers/id} Update peer profiles: update the defined profiles for a peer (replaces previous definitons).
+\item {\bf DELETE /peers/id} Delete peer: delete the peer structure with the given id.
+\item {\bf POST /users}	Create user: create a new user by specifying the username(unique), password and main entity.											
+\item {\bf GET /users/id} Read user by id: read information stored in the user structure with the matching id.											
+\item {\bf GET /users/username}	Read user by username: read information stored in the user structure with the matching username.										
+\item {\bf PUT /users/id} Update user password: replaces the existing user password for the user with the given id.	
+\item {\bf DELETE /users/id} Delete user: deletes the user with the given id.
+\end{itemize}
 \subsubsection{Repository}
 Not applicable, the PM is owned by the University of Trento. 
