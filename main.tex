@@ -6,7 +6,7 @@
 %
 
 \documentclass{SmartReport}
-\usepackage{url, rotating,todonotes}
+\usepackage{url, rotating,todonotes, listings}
 \let\svtodo\todo\renewcommand\todo[1]{\svtodo[inline]{#1}}
 % \newcommand{\todo}[1]{\textcolor{blue}{#1}}
 
@@ -54,6 +54,7 @@ CAS & Collective Adaptive System & \\ \hline
 HDA-CAS & Hybrid and Diversity-Aware Collective Adaptive System & \\ \hline
 API & Application Programming Interface & Set of tools and methods for accessing, from within a computer program, the functionality of an application/service \\ \hline
 REST & Representational State Transfer & An architectural style of APIs, where the focus is on component roles and a specific set of interactions between data elements rather than implementation details.\\ \hline
+CBT & Collective-Based Task & Object encapsulating all the necessary logic for managing complex collective-related operations \\ \hline 
 CM & Context Manager & System component in charge of monitoring the
 context the agent represented on the platform by a peer is in.\\
 \hline
@@ -126,7 +127,7 @@ needed.\\
 \newpage
 
 
-\section{Expected Usage and Examples}
+\section{Expected Usage}
 \label{sec:usage}
 \input{sections/usage.tex}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
