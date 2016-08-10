@@ -90,7 +90,7 @@ the method:
 
 Additionally, CBT exposes a number of additional methods to match up to the methods offered by the Java 7 Future API:
 \begin{itemize}
-\item {\bf TaskResult get()} Waits if necessary for the computation to complete (until is- Done() == true), and then retrieves its result. 
+\item {\bf TaskResult get()} Waits if necessary for the computation to complete (until isDone() returns true), and then retrieves its result. 
 \item {\bf TaskResult get(long timeout, TimeUnit unit)} Same as above, but throwing appropriate exception if timeout expired before the result was obtained.
 \item {\bf boolean cancel(boolean mayInterruptIfRunning)} Attempts to abort the over- all execution in any state and transition directly to the final fail-state. %The original Java 7 semantics of the method is preserved.
 \item {\bf boolean isCancelled()} Returns true if CBT was canceled before it completed. %The original Java 7 semantics of the method is preserved.
@@ -101,9 +101,9 @@ A CBT object exposes the following methods for fetching the ABCs created during 
 \item {\bf Collective getCollectiveInput()} Returns the collective that was used as the input for the CBT.
 \item {\bf ABC getCollectiveProvisioned()} Returns the `provisioned' collective
 \item {\bf ABC getCollectiveAgreed()} Returns the `agreed' collective.
-\item {\bf List<ABC> getNegotiables()} Returns the list of negotiable collectives.
+\item {\bf List getNegotiables()} Returns the list of negotiable collectives.
 \end{itemize}
-As noted in Section 2.3 resident collectives (RCs) are created by querying the PeerManager via the following static methods of the ResidentCollective class:
+Resident collectives (RCs) are created by querying the PeerManager via the following static methods of the ResidentCollective class:
 \begin{itemize}
 \item {\bf ResidentCollective createFromQuery(PeerMgrQuery q, string to kind)} Creates and registers a collective with the PeerManager. %It is assumed that the kind entity describing the new collective has been properly registered and initialized with CTX. When contacting PeerManager we pass also the ID of the application, and we assume that PeerManager checks (with the help of the programming model run- time) whether we are allowed to create a collective of the requested kind, and filters out only those peers whose privacy settings allow them to be visible to our appli- cation’s queries. The registered kind descriptor in the CTX allows this method to know how to properly transform the attributes from the entities obtained from the PeerManager to those expected by the target kind.
 \item {\bf ResidentCollective createFromID(string ID, string to kind)} Creates a local representation of an already existing collective on the PeerManager, with a pre-existing ID. Invocation of this method will not create a collective on PeerManager, so in case of passing a non-existing collective ID an exception is thrown. This method allows us to use and access externally defined RCs. %When contacting PeerManager we pass also the ID of the application, and we assume that the PeerManager checks whether we are allowed to access the requested a collective, and filters out only those peers whose privacy settings allow them to be visible to our application’s queries. The registered kind descriptor in the CTX allows this method to know how to prop- erly transform the attributes from the entities obtained from the PeerManager to those expected by the target kind.

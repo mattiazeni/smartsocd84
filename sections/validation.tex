@@ -1,7 +1,11 @@
 
 
 The final goal of validation activity is to test the ability of the platform to meet the high-level requirements %of the platform were 
-described and analyzed in detail in~\cite{D8.1}. In Table~\ref{tab:req} we summarize the current status of the platform development in terms of ability to meet the requirements identified by the Consortium. As it can be seen, not all requirements have been met yet, in most cases as they refer to components which are still not fully completed within the respective workpackage. Yet, the platform in its current version already provides the minimum level of functionality required to handle a rather large range of social computations, as demonstrated by the available demo applications.
+described and analyzed in detail in~\cite{D8.1}. In Table~\ref{tab:req} we summarize the achievements of the platform development in terms of ability to meet the requirements identified by the Consortium.
+
+As it can be seen, most of the requirements, but not all, have been met. In general, this reflects on the one hand a shift in focus  
+
+%As it can be seen, not all requirements have been met yet, in most cases as they refer to components which are still not fully completed within the respective workpackage. Yet, the platform in its current version already provides the minimum level of functionality required to handle a rather large range of social computations, as demonstrated by the available demo applications.
 
 \begin{sidewaystable}
 {\footnotesize \begin{tabular}{|p{1.1cm}|p{4cm}|p{6.7cm}|p{1.5cm}|p{6.2cm}|}
@@ -11,16 +15,16 @@ ID & Chapter & Description & Met? & Remarks \\
 CR-1 & Computational Requirements & The platform should be able to execute human-based computations & Yes & See SmartShare and AskSmartSociety! demo\\  \hline
 CR-2 & Computational Requirements & The platform should be able to execute machine-based computations & Yes & \\ \hline
 CR-3 & Computational Requirements & The platform should be able to support hybrid computations & Yes & See AskSmartSociety! demo\\ \hline
-PP-1 & Peer Profiles and Peer Profiling & Peers will be characterized by a static and a dynamic profile. & Partially & See \cite{D4.1,D4.2,D4.3}, integration with context manager ongoing\\ \hline
+PP-1 & Peer Profiles and Peer Profiling & Peers will be characterized by a static and a dynamic profile. & Yes & The CM maintains the dynamic part of the profile\\ \hline
 PP-2 & Peer Profiles and Peer Profiling & Peer profiles data storage & Partially & See \cite{D4.3}  for integration with PPL\\ \hline
 PP-3 & Peer Profiles and Peer Profiling & Peers can have multiple profiles & Partially & See \cite{D4.2,D4.3}\\ \hline
 PP-4 &Peer Profiles and Peer Profiling  & Platform will support the profiling of peers & Partially & Integration with reputation service completed, full profiling missing\\ \hline
-PU-1 & Platform Usability & The SmartSociety platform should be accessible through a set of open APIs & Partially & Final set of APIs will depend on the programming framework~\cite{D7.2} \\ \hline
-PU-2 & Platform Usability & Ease for developers to create and manage applications & No & Depends on release of programming framework\\ \hline
-PU-3 & Platform Usability & Support application development and deployment life-cycle automatically & Partially & A first version of the runtime is included in v2.0 \\ \hline
+PU-1 & Platform Usability & The SmartSociety platform should be accessible through a set of open APIs & Yes & See previous sections of this document \\ \hline
+PU-2 & Platform Usability & Ease for developers to create and manage applications & Partially & Using PF interfaces\\ \hline
+PU-3 & Platform Usability & Support application development and deployment life-cycle automatically & Partially & Limited support for deployment \\ \hline
 PU-4 & Platform Usability & Management GUI & Yes & The monitoring component has been integrated in v2.0 and includes a management dashboard\\ \hline
 HT-1 & Platform Components and Interactions Heterogeneity & Number of different channels to interact with human peers & Yes & See~\cite{D7.1} and AskSmartSociety! demo.\\ \hline
-HT-2 & Platform Components and Interactions Heterogeneity & Platform components will run on a variety of heterogeneous devices & No & Currently tested only on servers.\\ \hline
+HT-2 & Platform Components and Interactions Heterogeneity & Platform components will run on a variety of heterogeneous devices & No & Runs only on servers.\\ \hline
 HT-3  & Platform Components and Interactions Heterogeneity & SmartSociety applications will be accessible via a variety of devices, online via the web and on mobile devices & Yes & See SmartSmare and AskSmartSociety! demos.\\ \hline
 HT-4  & Platform Components and Interactions Heterogeneity & SmartSociety  will support a diversity of user interfaces for user engagement and recruitment & Partially & See~\cite{D9.3}\\ \hline
 SEC-1 & Privacy and Security & Access Control & Partially & See~\cite{D4.3}\\  \hline
@@ -30,17 +34,17 @@ SEC-4 &  Privacy and Security & Peer Defined Usage Control Policies & No & \\ \h
 SEC-5 &  Privacy and Security & Secure Collection and Storage & Yes & See~\cite{D4.3}\\ \hline
 SEC-6 &  Privacy and Security & Comprehensive explanations of security and privacy issues & No & \\ \hline
 GOV-1 & Governance & Platform should support the collection of data related to governance & Partially & Provenance service integrated in v.2.0\\ \hline
-GOV-2 & Governance  &Platform should support the implementation of governance policies & No & \\ \hline
-PR-1 & Performance Requirements & Scalability & No & No scalability tests performed so far.\\ \hline
+GOV-2 & Governance  & Platform should support the implementation of governance policies & No & \\ \hline
+PR-1 & Performance Requirements & Scalability & Partially & The codebase has not been optimized for performance\\ \hline
 \end{tabular}
 }
-\caption{Features of platform 2.0 against requirements.}
+\caption{Features of final version of the platform against requirements.}
 \label{tab:req}
 \end{sidewaystable}
 
-We now move to briefly describing the validation and testing activities carried out within the scope of Task T8.4 ('Lab experiments and platform validation'). These were based on the flexible AskSmartSociety! application developed in year-2 and presented in~\cite{D8.2} and included the development of a number of small-scale prototypes aimed at testing the flexibility and extensibility of the platform. In particular, the following two results were achieved:
-\begin{itemize}
-\item {\bfseries Image tagging application:} based on the AskSmartSociety! application, a simple image tagging application was carried out. By means of such an application participants can post an image through the Ask! mobile application and ask other participants to provide tags annotating the image content. Other participants can tag the image using the Reply! application or the SmartSociety twitter peer. Tags are collected in the AskSmartSociety! peer, where they are disambiguated (using a third-party semantic analysis engine), ranked and finally the most likely tags are reported back to the user. The development required minimal modifications of the Ask! and Reply! application, integration with a third-party service for entity extraction~\footnote{\url{https://dandelion.eu/}} and a third-party service for image storage~\footnote{\url{http://imgur.com/}}.
-\item {\bfseries Facebook Peer and AskSmartSociety! Integration:} we developed a Facebook peer, in the form of a Facebook application connected to the SmartSociety platform. The integration was carried out for the AskSmartSociety! application. In this case, as it was for the Twitter peer, questions asked through the Ask! application get posted on the Facebook app page. Users who subscribed to the application can reply to the question using the `comment' Facebook functionality. Additionally, users can `like' comments posted by other users, an information which may be used to rank answers. In the AskSmartSociety! peer, answers from the Facebook peer are collected and integrated with those coming from the Reply! mobile app and the Twitter live feed. 
-\end{itemize}
-The work carried out to realize the two prototypes highlighted a number of issues in the current version of the platform, in particular in terms of functionality and ease of use of the APIs exposed by the Peer Manager; a new set of APIs was released by WP4 accordingly.
+% We now move to briefly describing the validation and testing activities carried out within the scope of Task T8.4 ('Lab experiments and platform validation'). These were based on the flexible AskSmartSociety! application developed in year-2 and presented in~\cite{D8.2} and included the development of a number of small-scale prototypes aimed at testing the flexibility and extensibility of the platform. In particular, the following two results were achieved:
+% \begin{itemize}
+% \item {\bfseries Image tagging application:} based on the AskSmartSociety! application, a simple image tagging application was carried out. By means of such an application participants can post an image through the Ask! mobile application and ask other participants to provide tags annotating the image content. Other participants can tag the image using the Reply! application or the SmartSociety twitter peer. Tags are collected in the AskSmartSociety! peer, where they are disambiguated (using a third-party semantic analysis engine), ranked and finally the most likely tags are reported back to the user. The development required minimal modifications of the Ask! and Reply! application, integration with a third-party service for entity extraction~\footnote{\url{https://dandelion.eu/}} and a third-party service for image storage~\footnote{\url{http://imgur.com/}}.
+% \item {\bfseries Facebook Peer and AskSmartSociety! Integration:} we developed a Facebook peer, in the form of a Facebook application connected to the SmartSociety platform. The integration was carried out for the AskSmartSociety! application. In this case, as it was for the Twitter peer, questions asked through the Ask! application get posted on the Facebook app page. Users who subscribed to the application can reply to the question using the `comment' Facebook functionality. Additionally, users can `like' comments posted by other users, an information which may be used to rank answers. In the AskSmartSociety! peer, answers from the Facebook peer are collected and integrated with those coming from the Reply! mobile app and the Twitter live feed. 
+% \end{itemize}
+% The work carried out to realize the two prototypes highlighted a number of issues in the current version of the platform, in particular in terms of functionality and ease of use of the APIs exposed by the Peer Manager; a new set of APIs was released by WP4 accordingly.
