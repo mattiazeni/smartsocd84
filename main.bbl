@@ -21,20 +21,24 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
-\bibitem{D8.1}
-I.~Carreras, ``Platform requirements analysis and system design,'' SmartSociety
-  FP7 Project Deliverable D8.1, Dec. 2013.
-
 \bibitem{D8.2}
 I.~Carreras, D.~Miorandi, and T.~Schiavinotto, ``Platform prototype: early
   results and progress report,'' SmartSociety FP7 Project Deliverable D8.2,
   Dec. 2014.
+
+\bibitem{D8.1}
+I.~Carreras, ``Platform requirements analysis and system design,'' SmartSociety
+  FP7 Project Deliverable D8.1, Dec. 2013.
 
 \bibitem{scekic_soca2015}
 O.~Scekic, D.~Miorandi, T.~Schiavinotto, D.~I. Diochnos, A.~Hume,
   R.~Chenu-Abente, H.-L. Truong, M.~Rovatsos, I.~Carreras, S.~Dustdar, and
   F.~Giunchiglia, ``{SmartSociety} -- a platform for collaborative
   people-machine computation,'' in \emph{Proc. of SOCA 2015}, Rome, IT, 2015.
+
+\bibitem{D7.2}
+O.~Scekic and H.-L. Truong, ``Programming models and languages,'' SmartSociety
+  FP7 Project Deliverable D7.2, Jun. 2015.
 
 \bibitem{D6.2}
 M.~Rovatsos, ``Static social orchestration: implementation and evaluation,''
@@ -56,17 +60,17 @@ M.~Rovatsos, ``Computational models and validation,'' SmartSociety FP7 Project
 L.~Moreau, ``Provenance, trust, reputation and big data,'' SmartSociety FP7
   Project Deliverable D2.2, Dec. 2014.
 
-\bibitem{D7.2}
-O.~Scekic and H.-L. Truong, ``Programming models and languages,'' SmartSociety
-  FP7 Project Deliverable D7.2, Jun. 2015.
-
-\bibitem{D4.1}
-A.~Hume, ``Peers and micro-task profiling: early results and progress report,''
-  SmartSociety FP7 Project Deliverable D4.1, Dec. 2013.
+\bibitem{D8.3}
+I.~Carreras, D.~Miorandi, and T.~Schiavinotto, ``Second platform prototype and
+  validation,'' SmartSociety FP7 Project Deliverable D8.2, Dec. 2014.
 
 \bibitem{D4.2}
-------, ``Peer search in smart societies,'' SmartSociety FP7 Project
+A.~Hume, ``Peer search in smart societies,'' SmartSociety FP7 Project
   Deliverable D4.2, Dec. 2014.
+
+\bibitem{D2.4}
+M.~Rovatsos, ``Final models and validation,'' SmartSociety FP7 Project
+  Deliverable D2.4, Jan. 2016.
 
 \bibitem{D7.1}
 H.-L. Truong and O.~Scekic, ``Virtualization techniques and prototypes,''

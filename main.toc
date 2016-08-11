@@ -1,59 +1,51 @@
-\contentsline {section}{\numberline {1}Introduction}{10}
-\contentsline {section}{\numberline {2}Platform Architecture}{12}
-\contentsline {section}{\numberline {3}Components and APIs}{15}
-\contentsline {subsection}{\numberline {3.1}Orchestration Manager}{15}
-\contentsline {subsubsection}{\numberline {3.1.1}Functionality and Features}{15}
-\contentsline {subsubsection}{\numberline {3.1.2}Implementation}{15}
-\contentsline {subsubsection}{\numberline {3.1.3}Interfaces, Endpoints and Resources Exposed}{15}
-\contentsline {subsubsection}{\numberline {3.1.4}Repository}{17}
-\contentsline {subsection}{\numberline {3.2}Peer Manager}{17}
-\contentsline {subsubsection}{\numberline {3.2.1}Functionality and Features}{17}
-\contentsline {subsubsection}{\numberline {3.2.2}Implementation}{18}
-\contentsline {subsubsection}{\numberline {3.2.3}Interfaces, Endpoints and Resources Exposed}{18}
-\contentsline {subsubsection}{\numberline {3.2.4}Repository}{20}
-\contentsline {subsection}{\numberline {3.3}Context Manager}{20}
-\contentsline {subsubsection}{\numberline {3.3.1}Functionality and Features}{20}
-\contentsline {subsubsection}{\numberline {3.3.2}Implementation}{21}
-\contentsline {subsubsection}{\numberline {3.3.3}Interfaces, Endpoints and Resources Exposed}{21}
-\contentsline {subsubsection}{\numberline {3.3.4}Repository}{21}
-\contentsline {subsection}{\numberline {3.4}Incentive Server}{21}
-\contentsline {subsubsection}{\numberline {3.4.1}Functionality and Features}{21}
-\contentsline {subsubsection}{\numberline {3.4.2}Implementation}{21}
-\contentsline {subsubsection}{\numberline {3.4.3}Interfaces, Endpoints and Resources Exposed}{21}
-\contentsline {subsubsection}{\numberline {3.4.4}Repository}{22}
-\contentsline {subsection}{\numberline {3.5}Task Execution Manager}{22}
-\contentsline {subsubsection}{\numberline {3.5.1}Functionality and Features}{22}
-\contentsline {subsubsection}{\numberline {3.5.2}Implementation}{23}
-\contentsline {subsubsection}{\numberline {3.5.3}Interfaces, Endpoints and Resources Exposed}{23}
-\contentsline {subsubsection}{\numberline {3.5.4}Repository}{23}
-\contentsline {subsection}{\numberline {3.6}Provenance Service}{23}
-\contentsline {subsubsection}{\numberline {3.6.1}Functionality and Features}{23}
-\contentsline {subsubsection}{\numberline {3.6.2}Implementation}{24}
-\contentsline {subsubsection}{\numberline {3.6.3}Interfaces, Endpoints and Resources Exposed}{24}
-\contentsline {subsubsection}{\numberline {3.6.4}Repository}{24}
-\contentsline {subsection}{\numberline {3.7}Reputation Service}{24}
-\contentsline {subsubsection}{\numberline {3.7.1}Functionality and Features}{24}
-\contentsline {subsubsection}{\numberline {3.7.2}Implementation}{25}
-\contentsline {subsubsection}{\numberline {3.7.3}Interfaces, Endpoints and Resources Exposed}{25}
-\contentsline {subsubsection}{\numberline {3.7.4}Repository}{25}
-\contentsline {subsection}{\numberline {3.8}Communication Middleware}{25}
-\contentsline {subsubsection}{\numberline {3.8.1}Functionality and Features}{25}
-\contentsline {subsubsection}{\numberline {3.8.2}Implementation}{26}
-\contentsline {subsubsection}{\numberline {3.8.3}Interfaces, Endpoints and Resources Exposed}{26}
-\contentsline {subsubsection}{\numberline {3.8.4}Repository}{28}
-\contentsline {subsection}{\numberline {3.9}Monitoring}{29}
-\contentsline {subsubsection}{\numberline {3.9.1}Functionality and Features}{29}
-\contentsline {subsubsection}{\numberline {3.9.2}Implementation}{29}
-\contentsline {subsubsection}{\numberline {3.9.3}Interfaces, Endpoints and Resources Exposed}{30}
-\contentsline {subsubsection}{\numberline {3.9.4}Repository}{31}
-\contentsline {subsection}{\numberline {3.10}Runtime}{31}
-\contentsline {subsection}{\numberline {3.11}Component Library}{32}
-\contentsline {subsubsection}{\numberline {3.11.1}SmartCom}{32}
-\contentsline {subsubsection}{\numberline {3.11.2}Orchestration Manager}{32}
-\contentsline {subsubsection}{\numberline {3.11.3}Peer Manager}{33}
-\contentsline {subsubsection}{\numberline {3.11.4}Provenance}{33}
-\contentsline {subsection}{\numberline {3.12}Monitoring Framework}{33}
-\contentsline {subsection}{\numberline {3.13}Expected evolution}{33}
-\contentsline {section}{\numberline {4}Expected Usage and Examples}{35}
-\contentsline {section}{\numberline {5}Validation}{41}
-\contentsline {section}{\numberline {6}Conclusions}{45}
+\contentsline {section}{\numberline {1}Introduction}{9}
+\contentsline {section}{\numberline {2}Platform Architecture}{11}
+\contentsline {section}{\numberline {3}Components and APIs}{14}
+\contentsline {subsection}{\numberline {3.1}Orchestration Manager}{14}
+\contentsline {subsubsection}{\numberline {3.1.1}Functionality and Features}{14}
+\contentsline {subsubsection}{\numberline {3.1.2}Implementation}{14}
+\contentsline {subsubsection}{\numberline {3.1.3}Interfaces, Endpoints and Resources Exposed}{14}
+\contentsline {subsubsection}{\numberline {3.1.4}Repository}{16}
+\contentsline {subsection}{\numberline {3.2}Peer Manager}{16}
+\contentsline {subsubsection}{\numberline {3.2.1}Functionality and Features}{16}
+\contentsline {subsubsection}{\numberline {3.2.2}Implementation}{17}
+\contentsline {subsubsection}{\numberline {3.2.3}Interfaces, Endpoints and Resources Exposed}{17}
+\contentsline {subsubsection}{\numberline {3.2.4}Repository}{19}
+\contentsline {subsection}{\numberline {3.3}Context Manager}{19}
+\contentsline {subsubsection}{\numberline {3.3.1}Functionality and Features}{19}
+\contentsline {subsubsection}{\numberline {3.3.2}Implementation}{20}
+\contentsline {subsubsection}{\numberline {3.3.3}Interfaces, Endpoints and Resources Exposed}{20}
+\contentsline {subsubsection}{\numberline {3.3.4}Repository}{20}
+\contentsline {subsection}{\numberline {3.4}Incentive Server}{20}
+\contentsline {subsubsection}{\numberline {3.4.1}Functionality and Features}{20}
+\contentsline {subsubsection}{\numberline {3.4.2}Implementation}{20}
+\contentsline {subsubsection}{\numberline {3.4.3}Interfaces, Endpoints and Resources Exposed}{20}
+\contentsline {subsubsection}{\numberline {3.4.4}Repository}{21}
+\contentsline {subsection}{\numberline {3.5}Task Execution Manager}{21}
+\contentsline {subsubsection}{\numberline {3.5.1}Functionality and Features}{21}
+\contentsline {subsubsection}{\numberline {3.5.2}Implementation}{22}
+\contentsline {subsubsection}{\numberline {3.5.3}Interfaces, Endpoints and Resources Exposed}{22}
+\contentsline {subsubsection}{\numberline {3.5.4}Repository}{22}
+\contentsline {subsection}{\numberline {3.6}Provenance Service}{22}
+\contentsline {subsubsection}{\numberline {3.6.1}Functionality and Features}{22}
+\contentsline {subsubsection}{\numberline {3.6.2}Implementation}{23}
+\contentsline {subsubsection}{\numberline {3.6.3}Interfaces, Endpoints and Resources Exposed}{23}
+\contentsline {subsubsection}{\numberline {3.6.4}Repository}{23}
+\contentsline {subsection}{\numberline {3.7}Reputation Service}{23}
+\contentsline {subsubsection}{\numberline {3.7.1}Functionality and Features}{23}
+\contentsline {subsubsection}{\numberline {3.7.2}Implementation}{24}
+\contentsline {subsubsection}{\numberline {3.7.3}Interfaces, Endpoints and Resources Exposed}{24}
+\contentsline {subsubsection}{\numberline {3.7.4}Repository}{24}
+\contentsline {subsection}{\numberline {3.8}Communication Middleware}{24}
+\contentsline {subsubsection}{\numberline {3.8.1}Functionality and Features}{24}
+\contentsline {subsubsection}{\numberline {3.8.2}Implementation}{25}
+\contentsline {subsubsection}{\numberline {3.8.3}Interfaces, Endpoints and Resources Exposed}{25}
+\contentsline {subsubsection}{\numberline {3.8.4}Repository}{27}
+\contentsline {subsection}{\numberline {3.9}Monitoring}{27}
+\contentsline {subsubsection}{\numberline {3.9.1}Functionality and Features}{27}
+\contentsline {subsubsection}{\numberline {3.9.2}Implementation}{27}
+\contentsline {subsubsection}{\numberline {3.9.3}Interfaces, Endpoints and Resources Exposed}{28}
+\contentsline {subsubsection}{\numberline {3.9.4}Repository}{28}
+\contentsline {section}{\numberline {4}Expected Usage}{29}
+\contentsline {section}{\numberline {5}Validation}{33}
+\contentsline {section}{\numberline {6}Conclusions}{35}
