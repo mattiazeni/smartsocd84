@@ -6,7 +6,7 @@ The PM was designed with the objective of keeping the information owned by peers
 Not applicable, the PM is owned by University of Trento and implementation details are not made public.
 \subsubsection{Interfaces, Endpoints and Resources Exposed}
 % \todo{add from https://docs.google.com/spreadsheets/d/1UlRKshoALlSzmJYZVLkuzAGTUukdFKaONlKqPmd3RWo/edit#gid=0}
-\todo{@Ronald: please check}
+\todo{@Ronald: please check the APIs \& also whether we can share them (deliverable is PU)}
 We divide APIs in chapters. Let us start with the security ones:
 \begin{itemize}
 \item {\bf POST /security/login} Used for authentication. The call includes as parameters an identifier and a password, and returns, among the other data, a token to be used for further interactions with the platform.
@@ -21,29 +21,29 @@ The second set of APIs cover management operations:
 \item {\bf GET /collectives/identifier}	Return the usernames of all peers in a collective.				
 \item {\bf DELETE /collectives/} Delete the collective with a given id.	
 \item {\bf GET /types} Return the names and id of all the types defined in the peer manager.
-\item {\bf GET /types/id} Return a list of all the attributes for the given type id.
+\item {\bf GET /types/:id} Return a list of all the attributes for the given type id.
 \item {\bf POST /instances} Create a new instance from a given type and its attributes values. 
-\item {\bf GET /instances/id} Return the type and the attribute values for the given instance.
-\item {\bf PUT /instances/id} Update one or more attributes for a given instance id (only attributes passed as in this call will be affected).											
-\item {\bf DELETE /instances/id } Delete the instance structure with the given id.						
+\item {\bf GET /instances/:id} Return the type and the attribute values for the given instance.
+\item {\bf PUT /instances/:id} Update one or more attributes for a given instance id (only attributes passed as in this call will be affected).											
+\item {\bf DELETE /instances/:id } Delete the instance structure with the given id.						
 \item {\bf POST /profiles} Create a new profile from an existing instance, a transformation and a policy.
-\item {\bf GET /profiles/id} Read profile by id: returns the type, the transformation, the policy and the attribute values for the given profile. 
-\item {\bf DELETE /profiles/id} Delete profile by id: delete the profile structure with the given id.	
+\item {\bf GET /profiles/:id} Read profile by id: returns the type, the transformation, the policy and the attribute values for the given profile. 
+\item {\bf DELETE /profiles/:id} Delete profile by id: delete the profile structure with the given id.	
 \item {\bf POST /transformations}  Create a new transformation specifying the source type, the destination type and the attribute transformations to be performed.
-\item {\bf GET /transformations/id} Read transformation by id: return the source type, the destination type, and the attribute transformations for the given transformation.									
-\item {\bf DELETE /transformations/id} Delete transformation by id: delete the transformation structure with the given id.	
+\item {\bf GET /transformations/:id} Read transformation by id: return the source type, the destination type, and the attribute transformations for the given transformation.									
+\item {\bf DELETE /transformations/:id} Delete transformation by id: delete the transformation structure with the given id.	
 \item {\bf POST /policies} Create a new policy by specifying its use concept and validity limit.		
-\item {\bf GET /policies/id} Read policy by id: return the use concept and validity limit for the given policy.
-\item {\bf DELETE /policies/id} Delete policy by id: delete the policy structure with the given id.		
+\item {\bf GET /policies/:id} Read policy by id: return the use concept and validity limit for the given policy.
+\item {\bf DELETE /policies/:id} Delete policy by id: delete the policy structure with the given id.		
 \item {\bf POST /peers}	Create peer: create a new peer by specifying its main entity.			
-\item {\bf GET /peers/id} Read peer: read the main entity and defined profiles for a peer.
-\item {\bf PUT /peers/id} Update peer profiles: update the defined profiles for a peer (replaces previous definitons).
-\item {\bf DELETE /peers/id} Delete peer: delete the peer structure with the given id.
+\item {\bf GET /peers/:id} Read peer: read the main entity and defined profiles for a peer.
+\item {\bf PUT /peers/:id} Update peer profiles: update the defined profiles for a peer (replaces previous definitons).
+\item {\bf DELETE /peers/:id} Delete peer: delete the peer structure with the given id.
 \item {\bf POST /users}	Create user: create a new user by specifying the username(unique), password and main entity.											
-\item {\bf GET /users/id} Read user by id: read information stored in the user structure with the matching id.											
-\item {\bf GET /users/username}	Read user by username: read information stored in the user structure with the matching username.										
-\item {\bf PUT /users/id} Update user password: replaces the existing user password for the user with the given id.	
-\item {\bf DELETE /users/id} Delete user: deletes the user with the given id.
+\item {\bf GET /users/:id} Read user by id: read information stored in the user structure with the matching id.											
+\item {\bf GET /users/:username}	Read user by username: read information stored in the user structure with the matching username.										
+\item {\bf PUT /users/:id} Update user password: replaces the existing user password for the user with the given id.	
+\item {\bf DELETE /users/:id} Delete user: deletes the user with the given id.
 \end{itemize}
 \subsubsection{Repository}
 Not applicable, the PM is owned by the University of Trento and not disclosed. 
