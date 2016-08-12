@@ -12,6 +12,12 @@ The CM works as an extension of the PM and is used by the TEM to monitor paramet
 Not applicable, the CM is owned by University of Trento and implementation details are not made public.
 
 \subsubsection{Interfaces, Endpoints and Resources Exposed}
-\todo{@Mattia/Ronald: please add}
+\todo{@Mattia/Ronald: please check (add interfaces used by the PM?)}
+\begin{itemize}
+\item {\bf POST /monitorTask} Starts the process that monitors a specific task that as to be passed in the body of the request.
+\item {\bf GET /monitorTask} Get all the tasks which are being monitored by TEM with their status.
+\item {\bf GET /monitorTask/:taskID} Get a specific task which is being monitored by TEM with its status.
+\item {\bf DELETE /monitorTask/:taskID} Terminate the monitoring of a task.
+\end{itemize}
 \subsubsection{Repository}
 Not applicable, the CM is owned by the University of Trento and not disclosed. 
