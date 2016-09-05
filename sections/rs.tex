@@ -4,7 +4,7 @@ The reputation service provides storage for and access to feedback and reputatio
 \subsubsection{Implementation}
 The RS is implemented in Python and uses the Django framework and the prov library.
 \subsubsection{Interfaces, Endpoints and Resources Exposed}
-\todo{@Heather: please check}
+% \todo{@Heather: please check}
 The API currently describes three resources, applications, feedback, and reputation, which are documented below. 
 \begin{itemize}
 \item {\bf GET application/:app/subject/byURI/:subject\_uri/} Retrieve a subject’s information by its URI. The subject uri must be percentage encoded. The response object includes a list of feedback reports about the subject and the current reputation report for a subject.
@@ -15,4 +15,4 @@ The API currently describes three resources, applications, feedback, and reputat
 \end{itemize}
 
 \subsubsection{Repository}
-The reputation service implementation can be found at:\url{https://gitlab.com/smartsociety/reputationservice2.0/}
+The reputation service implementation can be found at: \url{https://gitlab.com/smartsociety/reputationservice2.0/}
