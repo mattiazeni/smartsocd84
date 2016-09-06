@@ -1,6 +1,5 @@
 \subsection{Task Execution Manager}
 \subsubsection{Functionality and Features}
-\todo{@Agnes: please check}
 The TEM is tasked with coordinating the execution of tasks, especially those involving `offline' actions by peers and collectives. The TEM acts as a monitoring platform and interacts with the Orchestration Manager and Context Manager/Peer Manager. It takes tasks agreed from the OM and instantiates the required monitors with the CM.
 For each task to be monitored the Execution Monitor requires as an input from the OM:
 \begin{itemize} 
@@ -9,7 +8,7 @@ For each task to be monitored the Execution Monitor requires as an input from th
 \end{itemize}
 At the same time the TEM will also have access to:
 \begin{itemize}
-\item Sensory data related to the peers involved in the execution (from the CM) and;
+\item Updates on the status of relevant peers from the PM (which are derived from sensory data related to the peers involved in the execution of the task);
 \item Mid and high-level data derived by sensor fusion in time and user input
 \end{itemize}
 Using these two sources the TEM produces an output to inform the OM of:
