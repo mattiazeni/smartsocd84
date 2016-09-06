@@ -1,6 +1,6 @@
 \subsection{Incentive Server}
 \subsubsection{Functionality and Features}
-\todo{@Kobi/Avi: please check content and modify if appropriate}
+% \todo{@Kobi/Avi: please check content and modify if appropriate}
 The Incentive Server analyzes in real-time user interaction and behaviour data within a single application and recommends incentives for these  users. The IS includes learning methods, so that it can adapt its recommendations over time. The IS includes mechanisms for defining  incentive types and messages, for receiving and storing behavioral data, for applying different  algorithms on this behavioral data, for deciding on conditions that requires interventions and for  recommending interventions for the applications that use it. See~\cite{D5.4} for more details.
 \subsubsection{Implementation}
 The incentive server is written in Python, and uses the Django framework. 
@@ -11,8 +11,12 @@ The incentive server is written in Python, and uses the Django framework.
 \item {\bf GET /api/incentive} Get all incentives types from the IS.
 \item {\bf POST /api/incentive} Add a new incentive to the IS. Must specify scheme name/ID, type name/ID and conditions under which the incentive should be applied.
 \item {\bf GET /getIncUser} Get the best incentive for a given user. This represents a pull operation by external application to obtain incentives for user.
-\item {\bf GET /ask\_by\_date}  Get intervention list from the given date. \todo{Up to now? Or just for the specific date?} 
-\item {\bf /ask\_by\_id} Intervention or intervention list from the given id. \todo{Unclear: what is the ID referring to? User? Or what else?}
+\item {\bf GET /ask\_by\_date}  Get intervention list sent to users after the given date. 
+\item {\bf GET /ask\_by\_id} Intervention or intervention list for the user with a given id.
+\item {\bf GET /asl\_gt\_id} Intervention or intervention list for users with id greater than the given one.
+\item {\bf GET /disratio} Returns the ratio between the number of users for which interventions were sent and the number of users for which no intervention was required.
+\item {\bf POST /reminder} Send a reminder to a given collective after a specified timeout.
+\item {\bf POST /invalidate/:collective\_id} Invalidate peers from a collective that is about to be reminded, so to make sure the reminder is sent only to those who have not replied yet.
 \end{itemize}
 The IS can be configured to work in push mode, sending incentives to an application; more details on how to do it are in~\cite{D5.4}. In the same document the functioning of the endpoint for retrieving behavioural data and inputting it to the IS is also described.
 \subsubsection{Repository}
